@@ -14,6 +14,12 @@ import java.util.*;
  */
 public class XMathFormula {
 
+    /**
+     * 公式计算器
+     *
+     * @param s 公式，例如：25.01 * ( 9 + 0.135 ) / ( 4.111 - 0.111 )
+     * @return 计算结果
+     */
     public static BigDecimal calc(String s) {
 
         // 中缀 -> 后缀
@@ -21,6 +27,12 @@ public class XMathFormula {
         return multipleCalculate(transferResult);
     }
 
+    /**
+     * 表达式计算
+     *
+     * @param s 参数
+     * @return 计算结果
+     */
     public static BigDecimal calc(Object... s) {
 
         // 中缀 -> 后缀
@@ -36,6 +48,12 @@ public class XMathFormula {
         return calc(sb.toString());
     }
 
+    /**
+     * 将 {@link Object} 转为 {@link String}
+     *
+     * @param o 任意被 {@link XMath#toString XMath.toString} 所支持的类
+     * @return 该数据的 {@link String} 表达形式
+     */
     private static String objToStr(Object o) {
 
         if (o instanceof BigDecimal) {
@@ -44,6 +62,12 @@ public class XMathFormula {
         return String.valueOf(o);
     }
 
+    /**
+     * 使用栈进行计算，支持 （）
+     *
+     * @param mathStr 被计算数据
+     * @return 计算结果
+     */
     private static List<String> transferInfillToSuffix(String mathStr) {
 
         // 标记输出结果
@@ -59,33 +83,28 @@ public class XMathFormula {
             // 3.如果当前字符是操作数，则直接填写到后缀表达式。
             if (!isSymbol(s)) {
                 result.add(s);
-            }
-            // 4.如果当前字符是（左括号，将其压入运算符栈（第一步定义）。
-            else if ("(".equals(s)) {
+            } else if ("(".equals(s)) {
+                // 4.如果当前字符是（左括号，将其压入运算符栈（第一步定义）。
                 stack.push(s);
-            }
-            // 5.如果当前字符为运算符，则
-            else if ("+".equals(s) || "-".equals(s) || "*".equals(s) || "/".equals(s)) {
+            } else if ("+".equals(s) || "-".equals(s) || "*".equals(s) || "/".equals(s)) {
+                // 5.如果当前字符为运算符，则
                 if (!stack.isEmpty()) {
                     String stackTop = stack.pop();
                     // 当此运算符的优先级高于栈顶元素的时候，则将此运算符压入运算符栈
                     if (compare(s, stackTop)) {
                         stack.push(stackTop);
                         stack.push(s);
-                    }
-                    // 否则，弹出栈顶运算符到后缀表达式，并且将当前运算符压栈。回到步骤2.
-                    else {
+                    } else {
+                        // 否则，弹出栈顶运算符到后缀表达式，并且将当前运算符压栈。回到步骤2.
                         result.add(stackTop);
                         stack.push(s);
                     }
-                }
-                // 5.1.当运算符栈为空，则将其压入运算符栈。
-                else {
+                } else {
+                    // 5.1.当运算符栈为空，则将其压入运算符栈。
                     stack.push(s);
                 }
-            }
-            // 6.如果当前字符是）右括号，反复将栈顶元素弹出到后缀表达式，直到栈顶元素是左括号（为止，并将左括号从栈中弹出丢弃。
-            else if (")".equals(s)) {
+            } else if (")".equals(s)) {
+                // 6.如果当前字符是）右括号，反复将栈顶元素弹出到后缀表达式，直到栈顶元素是左括号（为止，并将左括号从栈中弹出丢弃。
                 while (!stack.isEmpty()) {
                     String item = stack.pop();
                     if (!"(".equals(item)) {
@@ -102,13 +121,23 @@ public class XMathFormula {
         return result;
     }
 
+    /**
+     * 判断字符串是否包含计算符号
+     *
+     * @param s 待校验字符串
+     * @return 结果，包含计算符号返回 true
+     */
     private static boolean isSymbol(String s) {
 
         return "(".equals(s) || ")".equals(s) || "+".equals(s) || "-".equals(s) || "*".equals(s) || "/".equals(s);
     }
 
     /**
-     * 比较优先级
+     * 比较计算优先级
+     *
+     * @param s    被比较元素
+     * @param item 栈顶元素
+     * @return 此次计算优先级
      */
     private static boolean compare(String s, String item) {
         if ("(".equals(item)) {
@@ -120,6 +149,12 @@ public class XMathFormula {
         return false;
     }
 
+    /**
+     * 计算类
+     *
+     * @param transferToPostfix 待计算集合
+     * @return 计算结果
+     */
     private static BigDecimal multipleCalculate(List<String> transferToPostfix) {
 
         Stack<Object> stack = new Stack<>();

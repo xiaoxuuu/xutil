@@ -1,9 +1,12 @@
 package live.xiaoxu.util.math;
 
+import live.xiaoxu.util.XString;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -84,6 +87,8 @@ public class XMath {
     }
 
     /**
+     * 次方
+     *
      * @param o   原始数据
      * @param num 大于等于 0
      * @return 结果
@@ -177,6 +182,9 @@ public class XMath {
 
     /**
      * 平均数
+     *
+     * @param valList 参数
+     * @return 结果
      */
     public static BigDecimal avg(Object... valList) {
 
@@ -192,6 +200,9 @@ public class XMath {
 
     /**
      * 最大值
+     *
+     * @param valList 参数
+     * @return 结果
      */
     public static BigDecimal max(Object... valList) {
 
@@ -218,6 +229,9 @@ public class XMath {
 
     /**
      * 最小值
+     *
+     * @param valList 参数
+     * @return 结果
      */
     public static BigDecimal min(Object... valList) {
 
@@ -243,15 +257,11 @@ public class XMath {
     }
 
     /**
-     * 判断字符串是否为空(不依赖第三方)
-     */
-    private static boolean isBlank(String str) {
-
-        return null == str || str.trim().length() == 0;
-    }
-
-    /**
-     * 比较大小，o1 > o2 true
+     * 比较大小
+     *
+     * @param o1 参数1
+     * @param o2 参数2
+     * @return o1 大于 o2 返回 true
      */
     public static boolean moreThan(Object o1, Object o2) {
 
@@ -259,7 +269,11 @@ public class XMath {
     }
 
     /**
-     * 比较大小，o1 < o2 true
+     * 比较大小
+     *
+     * @param o1 参数1
+     * @param o2 参数2
+     * @return o1 小于 o2 返回 true
      */
     public static boolean lessThan(Object o1, Object o2) {
 
@@ -267,7 +281,11 @@ public class XMath {
     }
 
     /**
-     * 比较大小，o1 = o2 true
+     * 比较大小
+     *
+     * @param o1 参数1
+     * @param o2 参数2
+     * @return o1 等于 o2 返回 true
      */
     public static boolean equal(Object o1, Object o2) {
 
@@ -279,8 +297,11 @@ public class XMath {
      *
      * @param o                 数字
      * @param newScale          保留小数位数
-     * @param alwaysKeepDecimal 是否严格保留小数位数，0 -> 0.00
+     * @param roundingMode      四舍五入规则
+     * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
+     * @return 格式化结果
      */
+
     public static String format(Object o, int newScale, int roundingMode, boolean alwaysKeepDecimal) {
 
         if (null == o) {
@@ -295,8 +316,10 @@ public class XMath {
     /**
      * 将不同类型数字转为字符串，默认保留 2 位小数
      *
-     * @param o        数字
-     * @param newScale 是否取整，true 小数舍去，false 小数
+     * @param o                 数字
+     * @param newScale          是否取整，true 小数舍去，false 小数
+     * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
+     * @return 格式化结果
      */
     public static String format(Object o, int newScale, boolean alwaysKeepDecimal) {
 
@@ -311,6 +334,7 @@ public class XMath {
      *
      * @param o        数字
      * @param newScale 是否取整，true 小数舍去，false 小数
+     * @return 结果
      */
     public static String format(Object o, int newScale) {
 
@@ -321,6 +345,7 @@ public class XMath {
      * 将不同类型数字转为字符串，默认保留 2 位小数
      *
      * @param o 数字
+     * @return 结果
      */
     public static String format(Object o) {
 
@@ -331,9 +356,10 @@ public class XMath {
     }
 
     /**
-     * 将不同类型数字转为字符串，直接输出。null -> 0
+     * 将不同类型数字转为字符串，直接输出。null 输出为 0
      *
      * @param o 数字
+     * @return 结果
      */
     public static String toString(Object o) {
 
@@ -345,12 +371,21 @@ public class XMath {
 
     /**
      * 将 obj 转为 BigDecimal，null 默认返回 null
+     *
+     * @param o 参数
+     * @return 结果
      */
     public static BigDecimal toBigDecimal(Object o) {
 
         return tranObjectToBigDecimal(o);
     }
 
+    /**
+     * 将常见数字自动转换为 {@link BigDecimal}
+     *
+     * @param o 参数
+     * @return 结果
+     */
     private static BigDecimal tranObjectToBigDecimal(Object o) {
 
         BigDecimal b = null;
@@ -358,7 +393,7 @@ public class XMath {
             return b;
         }
         if (o instanceof String) {
-            b = isBlank((String) o) ? b : new BigDecimal((String) o);
+            b = XString.isBlank((String) o) ? b : new BigDecimal((String) o);
         } else if (o instanceof BigDecimal) {
             b = (BigDecimal) o;
         } else if (o instanceof Float) {
@@ -379,6 +414,12 @@ public class XMath {
         return b;
     }
 
+    /**
+     * 将集合拆分转换
+     *
+     * @param valList 参数
+     * @return 结果
+     */
     private static List<Object> tranObjToList(Object... valList) {
 
         List<Object> list = new ArrayList<>();
@@ -386,6 +427,7 @@ public class XMath {
             return list;
         }
         for (Object val : valList) {
+            // TODO 支持 Set 等 Collection
             if (val instanceof List) {
                 List<Object> valObjList = (List) val;
                 list.addAll(valObjList);

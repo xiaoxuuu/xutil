@@ -6,7 +6,7 @@
 
     <groupId>live.xiaoxu</groupId>
     <artifactId>xutil</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <gpg.keyname>你的 GPG 密钥名称</gpg.keyname>
@@ -30,26 +30,33 @@
             <name>xiaoxu</name>
             <email>x@xiaoxu.live</email>
             <organization>https://xiaoxu.live/</organization>
+            <timezone>+8</timezone>
         </developer>
     </developers>
 
-    <!-- scm -->
+    <!-- 仓库信息 -->
     <scm>
         <connection>scm:git@github.com:xiaoxuuu/xutil.git</connection>
         <developerConnection>scm:git@github.com:xiaoxuuu/xutil.git</developerConnection>
         <url>git@github.com:xiaoxuuu/xutil.git</url>
     </scm>
 
-    <!-- 分发管理与身份验证 https://central.sonatype.org/publish/publish-maven/#distribution-management-and-authentication -->
+    <!-- 发布管理 https://central.sonatype.org/publish/publish-maven/#distribution-management-and-authentication -->
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
+            <!-- 这里的 id 必须要和全局配置中的 release id 一致 -->
             <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <name>Nexus Release Repository</name>
+            <!-- 这里就是在创建 issue 成功后，对方回复的 release 发布地址-->
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
+        <snapshotRepository>
+            <!-- 这里的 id 必须要和全局配置中的 snapshot id 一致 -->
+            <id>ossrh</id>
+            <name>Nexus Snapshot Repository</name>
+            <!-- 这里就是在创建 issue 成功后，对方回复的 snapshot 发布地址-->
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <build>
@@ -90,9 +97,11 @@
                 <version>1.6.13</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <!-- 这里的 id 必须要和全局配置中的 release id 一致 -->
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <!-- 如果希望发布后自动执行 close 和 release 操作，此处可以调整为 true -->
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <!-- source.jar -->

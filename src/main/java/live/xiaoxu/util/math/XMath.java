@@ -127,7 +127,7 @@ public class XMath {
             deviation = (deviation.add(value.divide(deviation, mc))).divide(num2, mc);
             cnt++;
         }
-        return deviation.setScale(DEF_DIV_SCALE, BigDecimal.ROUND_HALF_UP);
+        return deviation.setScale(DEF_DIV_SCALE, RoundingMode.HALF_UP);
     }
 
     /**
@@ -152,7 +152,7 @@ public class XMath {
         if (scale < 0) {
             throw new IllegalArgumentException("精确度不能小于 0");
         }
-        return v1.divide(v2, scale, BigDecimal.ROUND_HALF_UP);
+        return v1.divide(v2, scale, RoundingMode.HALF_UP);
     }
 
     /**
@@ -302,7 +302,7 @@ public class XMath {
      * @return 格式化结果
      */
 
-    public static String format(Object o, int newScale, int roundingMode, boolean alwaysKeepDecimal) {
+    public static String format(Object o, int newScale, RoundingMode roundingMode, boolean alwaysKeepDecimal) {
 
         if (null == o) {
             return null;
@@ -326,7 +326,7 @@ public class XMath {
         if (null == o) {
             return null;
         }
-        return format(o, newScale, BigDecimal.ROUND_HALF_UP, alwaysKeepDecimal);
+        return format(o, newScale, RoundingMode.HALF_UP, alwaysKeepDecimal);
     }
 
     /**
@@ -367,6 +367,20 @@ public class XMath {
             return "0";
         }
         return tranObjectToBigDecimal(o).toPlainString();
+    }
+
+    /**
+     * 将不同类型数字转为数字，直接输出。null 输出为 0
+     *
+     * @param o 数字
+     * @return 结果
+     */
+    public static Integer toInteger(Object o) {
+
+        if (o == null) {
+            return 0;
+        }
+        return tranObjectToBigDecimal(o).intValue();
     }
 
     /**

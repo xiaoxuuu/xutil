@@ -7,6 +7,14 @@
     <groupId>live.xiaoxu</groupId>
     <artifactId>xutil</artifactId>
     <version>1.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <name>XUtil</name>
     <description>A util based on JDK11</description>
     <url>https://github.com/xiaoxuuu/xutil</url>

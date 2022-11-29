@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -442,8 +443,8 @@ public class XMath {
         }
         for (Object val : valList) {
             // TODO 支持 Set 等 Collection
-            if (val instanceof List) {
-                List<Object> valObjList = (List) val;
+            if (val instanceof Collection) {
+                Collection<Object> valObjList = (Collection) val;
                 list.addAll(valObjList);
             } else {
                 list.add(val);

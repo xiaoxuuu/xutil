@@ -24,6 +24,9 @@ public class XMath {
      */
     private static final int DEF_DIV_SCALE = 20;
 
+    /**
+     * 禁止实例化
+     */
     private XMath() {
     }
 

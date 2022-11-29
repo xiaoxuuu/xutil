@@ -9,5 +9,10 @@ package live.xiaoxu.util.math;
  */
 public class XMathChain {
 
+    /**
+     * 禁止实例化
+     */
+    private XMathChain() {
+    }
     // TODO 待开发
 }

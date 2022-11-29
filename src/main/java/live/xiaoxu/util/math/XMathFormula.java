@@ -15,6 +15,12 @@ import java.util.*;
 public class XMathFormula {
 
     /**
+     * 禁止实例化
+     */
+    private XMathFormula() {
+    }
+
+    /**
      * 公式计算器
      *
      * @param s 公式，例如：25.01 * ( 9 + 0.135 ) / ( 4.111 - 0.111 )

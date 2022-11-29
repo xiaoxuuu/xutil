@@ -10,6 +10,12 @@ package live.xiaoxu.util;
 public class XString {
 
     /**
+     * 禁止实例化
+     */
+    private XString() {
+    }
+
+    /**
      * 判断字符串是否为空
      *
      * @param str 参数

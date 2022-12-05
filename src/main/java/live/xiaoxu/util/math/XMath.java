@@ -12,10 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 数学计算工具类：提供加减乘除、平均值、最大值、最小值计算
- * <p>
- * 2022/11/9 10:19
  *
  * @author XiaoXu
+ * @since 2022/11/9 10:19
  */
 public class XMath {
 
@@ -47,7 +46,7 @@ public class XMath {
             return BigDecimal.ZERO;
         }
         for (Object val : list) {
-            b = b.add(tranObjectToBigDecimal(val));
+            b = b.add(cast(val));
         }
         return b;
     }
@@ -64,7 +63,7 @@ public class XMath {
         if (null == v2) {
             throw new RuntimeException("除数不能为 0");
         }
-        return tranObjectToBigDecimal(v1).subtract(tranObjectToBigDecimal(v2));
+        return cast(v1).subtract(cast(v2));
     }
 
     /**
@@ -85,53 +84,9 @@ public class XMath {
             return BigDecimal.ZERO;
         }
         for (Object val : list) {
-            b1 = b1.multiply(tranObjectToBigDecimal(val));
+            b1 = b1.multiply(cast(val));
         }
         return b1;
-    }
-
-    /**
-     * 次方
-     *
-     * @param o   原始数据
-     * @param num 大于等于 0
-     * @return 结果
-     */
-    public static BigDecimal power(Object o, int num) {
-
-        if (0 == num) {
-            return BigDecimal.ONE;
-        }
-        BigDecimal original = tranObjectToBigDecimal(o);
-        if (1 == num) {
-            return original;
-        }
-        BigDecimal resultValue = tranObjectToBigDecimal(o);
-        for (int i = 1; i < num; i++) {
-            resultValue = multiply(resultValue, original);
-        }
-        return resultValue;
-    }
-
-    /**
-     * 标准差σ=sqrt(s^2)
-     * 结果精度：scale
-     * 牛顿迭代法求大数开方
-     *
-     * @param value 原数据
-     * @return 结果
-     */
-    public static BigDecimal sqrt(BigDecimal value) {
-        BigDecimal num2 = BigDecimal.valueOf(2);
-        int precision = 100;
-        MathContext mc = new MathContext(precision, RoundingMode.HALF_UP);
-        BigDecimal deviation = value;
-        int cnt = 0;
-        while (cnt < precision) {
-            deviation = (deviation.add(value.divide(deviation, mc))).divide(num2, mc);
-            cnt++;
-        }
-        return deviation.setScale(DEF_DIV_SCALE, RoundingMode.HALF_UP);
     }
 
     /**
@@ -181,7 +136,52 @@ public class XMath {
      */
     public static BigDecimal divide(Object v1, Object v2, Integer scale) {
 
-        return divide(tranObjectToBigDecimal(v1), tranObjectToBigDecimal(v2), scale);
+        return divide(cast(v1), cast(v2), scale);
+    }
+
+
+    /**
+     * 次方
+     *
+     * @param o   原始数据
+     * @param num 大于等于 0
+     * @return 结果
+     */
+    public static BigDecimal power(Object o, int num) {
+
+        if (0 == num) {
+            return BigDecimal.ONE;
+        }
+        BigDecimal original = cast(o);
+        if (1 == num) {
+            return original;
+        }
+        BigDecimal resultValue = cast(o);
+        for (int i = 1; i < num; i++) {
+            resultValue = multiply(resultValue, original);
+        }
+        return resultValue;
+    }
+
+    /**
+     * 标准差σ=sqrt(s^2)
+     * 结果精度：scale
+     * 牛顿迭代法求大数开方
+     *
+     * @param value 原数据
+     * @return 结果
+     */
+    public static BigDecimal sqrt(BigDecimal value) {
+        BigDecimal num2 = BigDecimal.valueOf(2);
+        int precision = 100;
+        MathContext mc = new MathContext(precision, RoundingMode.HALF_UP);
+        BigDecimal deviation = value;
+        int cnt = 0;
+        while (cnt < precision) {
+            deviation = (deviation.add(value.divide(deviation, mc))).divide(num2, mc);
+            cnt++;
+        }
+        return deviation.setScale(DEF_DIV_SCALE, RoundingMode.HALF_UP);
     }
 
     /**
@@ -218,12 +218,12 @@ public class XMath {
         if (list.size() == 0) {
             return BigDecimal.ZERO;
         }
-        max = tranObjectToBigDecimal(list.get(0));
+        max = cast(list.get(0));
         for (Object val : list) {
             if (null == val) {
                 continue;
             }
-            BigDecimal temp = tranObjectToBigDecimal(val);
+            BigDecimal temp = cast(val);
             if (temp.compareTo(max) > 0) {
                 max = temp;
             }
@@ -247,12 +247,12 @@ public class XMath {
         if (list.size() == 0) {
             return BigDecimal.ZERO;
         }
-        min = tranObjectToBigDecimal(list.get(0));
+        min = cast(list.get(0));
         for (Object val : list) {
             if (null == val) {
                 continue;
             }
-            BigDecimal temp = tranObjectToBigDecimal(val);
+            BigDecimal temp = cast(val);
             if (temp.compareTo(min) < 0) {
                 min = temp;
             }
@@ -269,7 +269,7 @@ public class XMath {
      */
     public static boolean moreThan(Object o1, Object o2) {
 
-        return tranObjectToBigDecimal(o1).compareTo(tranObjectToBigDecimal(o2)) > 0;
+        return cast(o1).compareTo(cast(o2)) > 0;
     }
 
     /**
@@ -281,7 +281,7 @@ public class XMath {
      */
     public static boolean lessThan(Object o1, Object o2) {
 
-        return tranObjectToBigDecimal(o1).compareTo(tranObjectToBigDecimal(o2)) < 0;
+        return cast(o1).compareTo(cast(o2)) < 0;
     }
 
     /**
@@ -293,7 +293,7 @@ public class XMath {
      */
     public static boolean equal(Object o1, Object o2) {
 
-        return tranObjectToBigDecimal(o1).compareTo(tranObjectToBigDecimal(o2)) == 0;
+        return cast(o1).compareTo(cast(o2)) == 0;
     }
 
     /**
@@ -305,23 +305,22 @@ public class XMath {
      * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
      * @return 格式化结果
      */
-
     public static String format(Object o, int newScale, RoundingMode roundingMode, boolean alwaysKeepDecimal) {
 
         if (null == o) {
             return null;
         }
-        BigDecimal bigDecimal = tranObjectToBigDecimal(o);
+        BigDecimal bigDecimal = cast(o);
         return alwaysKeepDecimal ?
                 bigDecimal.setScale(newScale, roundingMode).toPlainString() :
                 bigDecimal.setScale(newScale, roundingMode).stripTrailingZeros().toPlainString();
     }
 
     /**
-     * 将不同类型数字转为字符串，默认保留 2 位小数
+     * 将不同类型数字转为字符串
      *
      * @param o                 数字
-     * @param newScale          是否取整，true 小数舍去，false 小数
+     * @param newScale          保留小数位数
      * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
      * @return 格式化结果
      */
@@ -334,10 +333,10 @@ public class XMath {
     }
 
     /**
-     * 将不同类型数字转为字符串，当指定位数后，0 会处理为 0.00
+     * 将不同类型数字转为字符串，0 会处理为 0.00
      *
      * @param o        数字
-     * @param newScale 是否取整，true 小数舍去，false 小数
+     * @param newScale 保留小数位数
      * @return 结果
      */
     public static String format(Object o, int newScale) {
@@ -346,7 +345,7 @@ public class XMath {
     }
 
     /**
-     * 将不同类型数字转为字符串，默认保留 2 位小数
+     * 将不同类型数字转为字符串，默认保留 2 位小数，0 会处理为 0.00
      *
      * @param o 数字
      * @return 结果
@@ -370,7 +369,7 @@ public class XMath {
         if (o == null) {
             return "0";
         }
-        return tranObjectToBigDecimal(o).toPlainString();
+        return cast(o).toPlainString();
     }
 
     /**
@@ -384,7 +383,7 @@ public class XMath {
         if (o == null) {
             return 0;
         }
-        return tranObjectToBigDecimal(o).intValue();
+        return cast(o).intValue();
     }
 
     /**
@@ -395,16 +394,17 @@ public class XMath {
      */
     public static BigDecimal toBigDecimal(Object o) {
 
-        return tranObjectToBigDecimal(o);
+        return cast(o);
     }
 
     /**
-     * 将常见数字自动转换为 {@link BigDecimal}
+     * <p>将常见数字自动转换为 {@link BigDecimal}</p>
+     * <p>当数字类型为{@link java.lang.Double}时，调用{@link java.lang.Double#toString(double) Double.toString()}，会按 double 的实际能表达的精度对尾数进行了截断。</p>
      *
      * @param o 参数
      * @return 结果
      */
-    private static BigDecimal tranObjectToBigDecimal(Object o) {
+    private static BigDecimal cast(Object o) {
 
         BigDecimal b = null;
         if (null == o) {
@@ -417,10 +417,7 @@ public class XMath {
         } else if (o instanceof Float) {
             b = BigDecimal.valueOf((Float) o);
         } else if (o instanceof Double) {
-            /*
-              此方法内部其实执行了 {@link java.lang.Double} 的 {@link java.lang.Double#toString(double) toString()}
-              而 {@link java.lang.Double} 的 {@link java.lang.Double#toString(double) toString()} 按 double 的实际能表达的精度对尾数进行了截断。
-             */
+            // 此方法内部其实执行{@link java.lang.Double#toString(double) toString()}，会按 double 的实际能表达的精度对尾数进行了截断。
             b = BigDecimal.valueOf((Double) o);
         } else if (o instanceof Byte || o instanceof Short || o instanceof Integer || o instanceof Long) {
             b = new BigDecimal(o.toString());
@@ -445,7 +442,6 @@ public class XMath {
             return list;
         }
         for (Object val : valList) {
-            // TODO 支持 Set 等 Collection
             if (val instanceof Collection) {
                 Collection<Object> valObjList = (Collection) val;
                 list.addAll(valObjList);

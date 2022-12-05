@@ -21,7 +21,7 @@ public class XMath {
     /**
      * 默认的除法精确度
      */
-    private static final int DEF_DIV_SCALE = 20;
+    public static final int DEF_DIV_SCALE = 20;
 
     /**
      * 禁止实例化
@@ -97,7 +97,7 @@ public class XMath {
      * @param scale 表示表示需要精确到小数点以后几位
      * @return 两个参数的商(BigDecimal)
      */
-    private static BigDecimal divide(BigDecimal v1, BigDecimal v2, Integer scale) {
+    public static BigDecimal divide(Object v1, Object v2, Integer scale) {
 
         if (null == v1) {
             return BigDecimal.ZERO;
@@ -105,13 +105,16 @@ public class XMath {
         if (null == v2) {
             v2 = BigDecimal.ONE;
         }
-        if (v2.compareTo(BigDecimal.ZERO) == 0) {
+        if (equal(v2, 0)) {
             throw new IllegalArgumentException("除数不能为 0");
         }
         if (scale < 0) {
             throw new IllegalArgumentException("精确度不能小于 0");
         }
-        return v1.divide(v2, scale, RoundingMode.HALF_UP);
+
+        BigDecimal b1 = cast(v1);
+        BigDecimal b2 = cast(v2);
+        return b1.divide(b2, scale, RoundingMode.HALF_UP);
     }
 
     /**
@@ -127,28 +130,17 @@ public class XMath {
     }
 
     /**
-     * （相对）精确除法运算。当发生除不尽情况时，由 scale 参数指 定精度，以后数字四舍五入。
-     *
-     * @param v1    被除数
-     * @param v2    除数
-     * @param scale 表示表示需要精确到小数点以后几位
-     * @return 两个参数的商(String)
-     */
-    public static BigDecimal divide(Object v1, Object v2, Integer scale) {
-
-        return divide(cast(v1), cast(v2), scale);
-    }
-
-
-    /**
      * 次方
      *
      * @param o   原始数据
-     * @param num 大于等于 0
+     * @param num 次方根，大于等于 0
      * @return 结果
      */
     public static BigDecimal power(Object o, int num) {
 
+        if (0 > num) {
+            throw new IllegalArgumentException("次方根 0");
+        }
         if (0 == num) {
             return BigDecimal.ONE;
         }
@@ -164,24 +156,37 @@ public class XMath {
     }
 
     /**
-     * 标准差σ=sqrt(s^2)
-     * 结果精度：scale
-     * 牛顿迭代法求大数开方
+     * 开方（牛顿迭代法）
+     *
+     * @param value 原数据
+     * @param scale 保留小数位数
+     * @return 结果
+     */
+    public static BigDecimal sqrt(Object value, Integer scale) {
+
+        BigDecimal deviationFinal = cast(value);
+
+        BigDecimal num2 = cast(2);
+        int precision = 100;
+        MathContext mc = new MathContext(precision, RoundingMode.HALF_UP);
+        int cnt = 0;
+        BigDecimal deviation = cast(value);
+        while (cnt < precision) {
+            deviation = (deviation.add(deviationFinal.divide(deviation, mc))).divide(num2, mc);
+            cnt++;
+        }
+        return deviation.setScale(scale, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 开方（牛顿迭代法）
      *
      * @param value 原数据
      * @return 结果
      */
-    public static BigDecimal sqrt(BigDecimal value) {
-        BigDecimal num2 = BigDecimal.valueOf(2);
-        int precision = 100;
-        MathContext mc = new MathContext(precision, RoundingMode.HALF_UP);
-        BigDecimal deviation = value;
-        int cnt = 0;
-        while (cnt < precision) {
-            deviation = (deviation.add(value.divide(deviation, mc))).divide(num2, mc);
-            cnt++;
-        }
-        return deviation.setScale(DEF_DIV_SCALE, RoundingMode.HALF_UP);
+    public static BigDecimal sqrt(Object value) {
+
+        return sqrt(value, DEF_DIV_SCALE);
     }
 
     /**
@@ -305,7 +310,7 @@ public class XMath {
      * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
      * @return 格式化结果
      */
-    public static String format(Object o, int newScale, RoundingMode roundingMode, boolean alwaysKeepDecimal) {
+    public static String toString(Object o, int newScale, RoundingMode roundingMode, boolean alwaysKeepDecimal) {
 
         if (null == o) {
             return null;
@@ -324,12 +329,12 @@ public class XMath {
      * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
      * @return 格式化结果
      */
-    public static String format(Object o, int newScale, boolean alwaysKeepDecimal) {
+    public static String toString(Object o, int newScale, boolean alwaysKeepDecimal) {
 
         if (null == o) {
             return null;
         }
-        return format(o, newScale, RoundingMode.HALF_UP, alwaysKeepDecimal);
+        return toString(o, newScale, RoundingMode.HALF_UP, alwaysKeepDecimal);
     }
 
     /**
@@ -339,9 +344,9 @@ public class XMath {
      * @param newScale 保留小数位数
      * @return 结果
      */
-    public static String format(Object o, int newScale) {
+    public static String toString(Object o, int newScale) {
 
-        return format(o, newScale, true);
+        return toString(o, newScale, true);
     }
 
     /**
@@ -350,26 +355,12 @@ public class XMath {
      * @param o 数字
      * @return 结果
      */
-    public static String format(Object o) {
+    public static String toString(Object o) {
 
         if (null == o) {
             return null;
         }
-        return format(o, 2, false);
-    }
-
-    /**
-     * 将不同类型数字转为字符串，直接输出。null 输出为 0
-     *
-     * @param o 数字
-     * @return 结果
-     */
-    public static String toString(Object o) {
-
-        if (o == null) {
-            return "0";
-        }
-        return cast(o).toPlainString();
+        return toString(o, 2, false);
     }
 
     /**

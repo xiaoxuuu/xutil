@@ -1,4 +1,6 @@
-package live.xiaoxu.enums;
+package live.xiaoxu.util;
+
+import live.xiaoxu.enums.EnumInterface;
 
 import java.util.Arrays;
 import java.util.EnumSet;

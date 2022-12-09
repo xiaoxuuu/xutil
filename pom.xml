@@ -6,14 +6,15 @@
 
     <groupId>live.xiaoxu</groupId>
     <artifactId>xutil</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     <name>XUtil</name>
     <description>A util based on JDK11</description>
     <url>https://github.com/xiaoxuuu/xutil</url>
 
     <properties>
-        <gpg.key.name>你的 GPG 密钥名称</gpg.key.name>
+        <!-- gpg 公钥指纹 -->
+        <gpg.key.name>AB602CB18E92B4516C52CC81781BE47C86304C2D</gpg.key.name>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>

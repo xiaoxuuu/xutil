@@ -24,47 +24,47 @@ public class XMathChain {
 
     private XMathChain(Object val) {
 
-        value = XMath.toBigDecimal(val);
+        value = XMathUtils.toBigDecimal(val);
     }
 
     /**
-     * 加法，内部调用{@link XMath#sum(Object...)}
+     * 加法，内部调用{@link XMathUtils#sum(Object...)}
      *
      * @param valList 被加数集合
      * @return 两个参数的和(String)
      */
     public XMathChain sum(Object... valList) {
 
-        this.value = XMath.sum(value, valList);
+        this.value = XMathUtils.sum(value, valList);
         return this;
     }
 
     /**
-     * 减法，内部调用{@link XMath#subtract(Object, Object)}
+     * 减法，内部调用{@link XMathUtils#subtract(Object, Object)}
      *
      * @param v1 减数
      * @return 两个参数的差(String)
      */
     public XMathChain subtract(Object v1) {
 
-        this.value = XMath.subtract(value, v1);
+        this.value = XMathUtils.subtract(value, v1);
         return this;
     }
 
     /**
-     * 乘法，内部调用{@link XMath#multiply(Object...)}
+     * 乘法，内部调用{@link XMathUtils#multiply(Object...)}
      *
      * @param valList 乘数
      * @return 两个参数的积(String)
      */
     public XMathChain multiply(Object... valList) {
 
-        this.value = XMath.multiply(value, valList);
+        this.value = XMathUtils.multiply(value, valList);
         return this;
     }
 
     /**
-     * 除法，内部调用{@link XMath#divide(Object, Object, Integer)}
+     * 除法，内部调用{@link XMathUtils#divide(Object, Object, Integer)}
      *
      * @param v2    除数
      * @param scale 表示表示需要精确到小数点以后几位
@@ -72,81 +72,81 @@ public class XMathChain {
      */
     private XMathChain divide(BigDecimal v2, Integer scale) {
 
-        this.value = XMath.multiply(value, v2, scale);
+        this.value = XMathUtils.multiply(value, v2, scale);
         return this;
     }
 
     /**
-     * 除法，内部调用{@link XMath#divide(Object, Object)}
+     * 除法，内部调用{@link XMathUtils#divide(Object, Object)}
      *
      * @param v2 除数
      * @return 两个参数的商(String)
      */
     public XMathChain divide(Object v2) {
 
-        this.value = XMath.divide(value, v2);
+        this.value = XMathUtils.divide(value, v2);
         return this;
     }
 
 
     /**
-     * 次方，内部调用{@link XMath#power(Object, int)}
+     * 次方，内部调用{@link XMathUtils#power(Object, int)}
      *
      * @param num 次方根，大于等于 0
      * @return 结果
      */
     public XMathChain power(int num) {
 
-        this.value = XMath.power(value, num);
+        this.value = XMathUtils.power(value, num);
         return this;
     }
 
     /**
-     * 开方（牛顿迭代法），内部调用{@link XMath#sqrt(Object)}
+     * 开方（牛顿迭代法），内部调用{@link XMathUtils#sqrt(Object)}
      *
      * @return 结果
      */
     public XMathChain sqrt() {
 
-        this.value = XMath.sqrt(value);
+        this.value = XMathUtils.sqrt(value);
         return this;
     }
 
     /**
-     * 比较大小，内部调用{@link XMath#moreThan(Object, Object)}
+     * 比较大小，内部调用{@link XMathUtils#moreThan(Object, Object)}
      *
      * @param o2 参数2
      * @return value 大于 o2 返回 true
      */
     public boolean moreThan(Object o2) {
 
-        return XMath.moreThan(value, o2);
+        return XMathUtils.moreThan(value, o2);
     }
 
     /**
-     * 比较大小，内部调用{@link XMath#lessThan(Object, Object)}
+     * 比较大小，内部调用{@link XMathUtils#lessThan(Object, Object)}
      *
      * @param o2 参数2
      * @return o1 小于 o2 返回 true
      */
     public boolean lessThan(Object o2) {
 
-        return XMath.lessThan(value, o2);
+        return XMathUtils.lessThan(value, o2);
     }
 
     /**
-     * 比较大小，内部调用{@link XMath#equal(Object, Object)}
+     * 比较大小，内部调用{@link XMathUtils#equal(Object, Object)}
      *
      * @param o2 参数2
      * @return o1 等于 o2 返回 true
      */
     public boolean equal(Object o2) {
 
-        return XMath.equal(value, o2);
+        return XMathUtils.equal(value, o2);
     }
 
     /**
-     * 格式化为字符串，内部调用{@link XMath#toString(Object, int, RoundingMode, boolean)}
+     * 格式化为字符串，内部调用{@link XMathUtils#toString(Object, int, RoundingMode, boolean)}
      *
      * @param newScale          保留小数位数
      * @param roundingMode      四舍五入规则
@@ -155,11 +155,11 @@ public class XMathChain {
      */
     public String toString(int newScale, RoundingMode roundingMode, boolean alwaysKeepDecimal) {
 
-        return XMath.toString(value, newScale, roundingMode, alwaysKeepDecimal);
+        return XMathUtils.toString(value, newScale, roundingMode, alwaysKeepDecimal);
     }
 
     /**
-     * 格式化为字符串，内部调用{@link XMath#toString(Object, int, boolean)}
+     * 格式化为字符串，内部调用{@link XMathUtils#toString(Object, int, boolean)}
      *
      * @param newScale          保留小数位数
      * @param alwaysKeepDecimal 是否严格保留小数位数，0 展示为 0.00
@@ -167,28 +167,28 @@ public class XMathChain {
      */
     public String toString(int newScale, boolean alwaysKeepDecimal) {
 
-        return XMath.toString(value, newScale, alwaysKeepDecimal);
+        return XMathUtils.toString(value, newScale, alwaysKeepDecimal);
     }
 
     /**
-     * 格式化为字符串，内部调用{@link XMath#toString(Object, int)}
+     * 格式化为字符串，内部调用{@link XMathUtils#toString(Object, int)}
      *
      * @param newScale 保留小数位数
      * @return 结果
      */
     public String toString(int newScale) {
 
-        return XMath.toString(value, newScale);
+        return XMathUtils.toString(value, newScale);
     }
 
     /**
-     * 格式化为字符串，内部调用{@link XMath#toString(Object)}
+     * 格式化为字符串，内部调用{@link XMathUtils#toString(Object)}
      *
      * @return 结果
      */
     public String format() {
 
-        return XMath.toString(value);
+        return XMathUtils.toString(value);
     }
 
     /**
@@ -198,16 +198,16 @@ public class XMathChain {
      */
     public Integer toInteger() {
 
-        return XMath.toInteger(value);
+        return XMathUtils.toInteger(value);
     }
 
     /**
-     * 转为 BigDecimal，内部调用{@link XMath#toBigDecimal(Object)}
+     * 转为 BigDecimal，内部调用{@link XMathUtils#toBigDecimal(Object)}
      *
      * @return 结果
      */
     public BigDecimal toBigDecimal() {
 
-        return XMath.toBigDecimal(value);
+        return XMathUtils.toBigDecimal(value);
     }
 }

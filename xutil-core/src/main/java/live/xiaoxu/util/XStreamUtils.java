@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
  * @author 小徐
  * @since 2022/12/5 14:04
  */
-public class XStream {
+public class XStreamUtils {
 
     /**
      * 禁止实例化
      */
-    private XStream() {
+    private XStreamUtils() {
     }
 
     /**

@@ -7,12 +7,12 @@ package live.xiaoxu.util;
  *
  * @author 小徐
  */
-public class XDate {
+public class XDateUtils {
 
     /**
      * 禁止实例化
      */
-    private XDate() {
+    private XDateUtils() {
     }
 
     // TODO 待实现

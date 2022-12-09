@@ -7,6 +7,10 @@
     <groupId>live.xiaoxu</groupId>
     <artifactId>xutil</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>xutil-core</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

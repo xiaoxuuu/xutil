@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * 基于 {@link XMath} 的公式计算
+ * 基于 {@link XMathUtils} 的公式计算
  * <p>
  * 入参表达式需用空格将所有数字与符号分隔开，例如：25.01 * ( 9 + 0.135 ) / ( 4.111 - 0.111 )
  * <p>
@@ -12,12 +12,12 @@ import java.util.*;
  *
  * @author XiaoXu
  */
-public class XMathFormula {
+public class XMathFormulaUtils {
 
     /**
      * 禁止实例化
      */
-    private XMathFormula() {
+    private XMathFormulaUtils() {
     }
 
     /**
@@ -57,13 +57,13 @@ public class XMathFormula {
     /**
      * 将 {@link Object} 转为 {@link String}
      *
-     * @param o 任意被 {@link XMath#toString XMath.toString} 所支持的类
+     * @param o 任意被 {@link XMathUtils#toString XMath.toString} 所支持的类
      * @return 该数据的 {@link String} 表达形式
      */
     private static String objToStr(Object o) {
 
         if (o instanceof BigDecimal) {
-            return XMath.toString(o);
+            return XMathUtils.toString(o);
         }
         return String.valueOf(o);
     }
@@ -170,22 +170,22 @@ public class XMathFormula {
                 case "+":
                     a = stack.pop();
                     b = stack.pop();
-                    stack.push(XMath.sum(b, a));
+                    stack.push(XMathUtils.sum(b, a));
                     break;
                 case "-":
                     a = stack.pop();
                     b = stack.pop();
-                    stack.push(XMath.subtract(b, a));
+                    stack.push(XMathUtils.subtract(b, a));
                     break;
                 case "*":
                     a = stack.pop();
                     b = stack.pop();
-                    stack.push(XMath.multiply(b, a));
+                    stack.push(XMathUtils.multiply(b, a));
                     break;
                 case "/":
                     a = stack.pop();
                     b = stack.pop();
-                    stack.push(XMath.divide(b, a));
+                    stack.push(XMathUtils.divide(b, a));
                     break;
 
                 default:

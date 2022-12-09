@@ -7,12 +7,12 @@ package live.xiaoxu.util;
  *
  * @author XiaoXu
  */
-public class XString {
+public class XStringUtils {
 
     /**
      * 禁止实例化
      */
-    private XString() {
+    private XStringUtils() {
     }
 
     /**

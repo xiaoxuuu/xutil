@@ -1,6 +1,6 @@
 package live.xiaoxu.util.math;
 
-import live.xiaoxu.util.XString;
+import live.xiaoxu.util.XStringUtils;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author XiaoXu
  * @since 2022/11/9 10:19
  */
-public class XMath {
+public class XMathUtils {
 
     /**
      * 默认的除法精确度
@@ -26,7 +26,7 @@ public class XMath {
     /**
      * 禁止实例化
      */
-    private XMath() {
+    private XMathUtils() {
     }
 
     /**
@@ -402,7 +402,7 @@ public class XMath {
             return b;
         }
         if (o instanceof String) {
-            b = XString.isBlank((String) o) ? b : new BigDecimal((String) o);
+            b = XStringUtils.isBlank((String) o) ? b : new BigDecimal((String) o);
         } else if (o instanceof BigDecimal) {
             b = (BigDecimal) o;
         } else if (o instanceof Float) {

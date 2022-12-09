@@ -1,11 +1,9 @@
 package live.xiaoxu.enums;
 
-import live.xiaoxu.util.XEnumUtils;
-
 /**
  * <p>枚举功能拓展接口</p>
- * <p>实现此接口即可使用 {@link XEnumUtils} 中的方法</p>
- * <p>样例枚举请查看 {@link DemoEnum}</p>
+ * <p>实现此接口即可使用 {@link live.xiaoxu.util.XEnumUtils XEnumUtils} 中的方法</p>
+ * <p>样例枚举请查看 {@link live.xiaoxu.enums.DemoEnum DemoEnum}</p>
  *
  * @author 小徐
  * @since 2022/12/9 13:45

@@ -6,29 +6,27 @@
 
     <groupId>live.xiaoxu</groupId>
     <artifactId>xutil</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
-    <modules>
-        <module>xutil-core</module>
-    </modules>
-    <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
     <name>XUtil</name>
     <description>A util based on JDK11</description>
     <url>https://github.com/xiaoxuuu/xutil</url>
 
     <properties>
-        <gpg.keyname>你的 GPG 密钥名称</gpg.keyname>
+        <gpg.key.name>你的 GPG 密钥名称</gpg.key.name>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <!-- license -->
     <licenses>
@@ -99,8 +97,8 @@
                             <goal>sign</goal>
                         </goals>
                         <configuration>
-                            <keyname>${gpg.keyname}</keyname>
-                            <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                            <keyname>${gpg.key.name}</keyname>
+                            <passphraseServerId>${gpg.key.name}</passphraseServerId>
                         </configuration>
                     </execution>
                 </executions>

@@ -1,5 +1,7 @@
 package live.xiaoxu.enums;
 
+import live.xiaoxu.util.XEnumUtils;
+
 /**
  * <p>枚举功能拓展接口</p>
  * <p>实现此接口即可使用 {@link XEnumUtils} 中的方法</p>

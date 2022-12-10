@@ -48,7 +48,6 @@ public final class XEnumUtils {
      */
     public static <T> boolean containsByValue(Object value, EnumInterface<T>[] enums) {
 
-
         try {
             getByValue(value, enums);
         } catch (NoSuchElementException e) {

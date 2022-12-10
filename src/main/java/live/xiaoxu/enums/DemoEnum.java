@@ -16,11 +16,11 @@ public enum DemoEnum implements EnumInterface<Long> {
     ;
 
     private final Long code;
-    private final String name;
+    private final String introduction;
 
     DemoEnum(Long code, String name) {
         this.code = code;
-        this.name = name;
+        this.introduction = name;
     }
 
     @Override
@@ -28,7 +28,8 @@ public enum DemoEnum implements EnumInterface<Long> {
         return code;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getIntroduction() {
+        return introduction;
     }
 }

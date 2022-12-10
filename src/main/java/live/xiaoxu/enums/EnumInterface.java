@@ -11,11 +11,19 @@ package live.xiaoxu.enums;
 public interface EnumInterface<T> {
 
     /**
-     * 枚举固定字段 code 的重写方法，
-     * <p>
-     * code 字段数据应为枚举唯一标识，且数据不应重复
+     * <p>枚举固定字段 code 的重写方法</p>
+     * <p>数据应为枚举唯一标识，且数据不应重复</p>
      *
      * @return code 字段对应数据
      */
     T getCode();
+
+    /**
+     * <p>枚举固定字段 introduction 的重写方法</p>
+     * <p>数据应为枚举描述</p>
+     * <p>现阶段仅在接口文档注解中使用</p>
+     *
+     * @return introduction 字段对应数据
+     */
+    String getIntroduction();
 }

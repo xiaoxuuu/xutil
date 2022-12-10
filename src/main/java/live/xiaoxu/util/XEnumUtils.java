@@ -33,8 +33,7 @@ public final class XEnumUtils {
 
         String valueString = String.valueOf(value);
         return Arrays.stream(enums)
-                .filter(e -> Objects.equals(valueString, e.getName()) ||
-                        Objects.equals(valueString, String.valueOf(e.getCode())) ||
+                .filter(e -> Objects.equals(valueString, String.valueOf(e.getCode())) ||
                         Objects.equals(valueString, e.toString()))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("未找到指定枚举"));
@@ -76,8 +75,7 @@ public final class XEnumUtils {
         String valueString = String.valueOf(value);
         EnumSet<E> all = EnumSet.allOf(enumClass);
         return all.stream()
-                .filter(e -> Objects.equals(valueString, e.getName()) ||
-                        Objects.equals(valueString, String.valueOf(e.getCode())) ||
+                .filter(e -> Objects.equals(valueString, String.valueOf(e.getCode())) ||
                         Objects.equals(valueString, e.toString()))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("未找到指定枚举"));

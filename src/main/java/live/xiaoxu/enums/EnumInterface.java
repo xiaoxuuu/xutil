@@ -18,13 +18,4 @@ public interface EnumInterface<T> {
      * @return code 字段对应数据
      */
     T getCode();
-
-    /**
-     * 枚举固定字段 name 的重写方法
-     * <p>
-     * name 字段数据应为枚举中文名称，且数据不应重复
-     *
-     * @return name 字段对应数据
-     */
-    String getName();
 }

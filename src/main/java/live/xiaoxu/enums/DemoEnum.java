@@ -28,7 +28,6 @@ public enum DemoEnum implements EnumInterface<Long> {
         return code;
     }
 
-    @Override
     public String getName() {
         return name;
     }

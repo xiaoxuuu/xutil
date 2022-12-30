@@ -6,7 +6,7 @@ package live.xiaoxu.enums;
  * @author 小徐
  * @since 2022/12/9 13:46
  */
-public enum DemoEnum implements EnumInterface<Long> {
+public enum DemoEnum implements EnumInterface<Long>, EnumDescInterface {
 
     /**
      * 示例枚举
@@ -31,5 +31,10 @@ public enum DemoEnum implements EnumInterface<Long> {
     @Override
     public String getIntroduction() {
         return introduction;
+    }
+
+    @Override
+    public String enhanceApiDesc() {
+        return enhanceApiDesc(name(), introduction);
     }
 }

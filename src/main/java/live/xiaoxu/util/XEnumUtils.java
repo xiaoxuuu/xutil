@@ -1,11 +1,12 @@
 package live.xiaoxu.util;
 
+import live.xiaoxu.enums.EnumDescInterface;
 import live.xiaoxu.enums.EnumInterface;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>枚举常用工具类</p>
@@ -33,8 +34,7 @@ public final class XEnumUtils {
 
         String valueString = String.valueOf(value);
         return Arrays.stream(enums)
-                .filter(e -> Objects.equals(valueString, String.valueOf(e.getCode())) ||
-                        Objects.equals(valueString, e.toString()))
+                .filter(e -> contains(e, valueString))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("未找到指定枚举"));
     }
@@ -57,6 +57,18 @@ public final class XEnumUtils {
     }
 
     /**
+     * 判断枚举是否存在，拓展自方法 {@link XEnumUtils#getByValue get}
+     *
+     * @param value 待查找枚举值
+     * @param enums 待查找枚举枚举数组
+     * @return 存在返回 true
+     */
+    public static <T> boolean containsByValue(Object value, Collection<EnumInterface<?>> enums) {
+
+        return Objects.nonNull(getByValue(value, enums.toArray(new EnumInterface[enums.size()])));
+    }
+
+    /**
      * <p>查找枚举</p>
      * <p>会根据枚举的 name、code 以及枚举的名称进行搜寻，满足上述任意条件即会认为判断成功</p>
      * <p>会返回找到的第一个枚举</p>
@@ -74,8 +86,7 @@ public final class XEnumUtils {
         String valueString = String.valueOf(value);
         EnumSet<E> all = EnumSet.allOf(enumClass);
         return all.stream()
-                .filter(e -> Objects.equals(valueString, String.valueOf(e.getCode())) ||
-                        Objects.equals(valueString, e.toString()))
+                .filter(e -> contains(e, valueString))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("未找到指定枚举"));
     }
@@ -97,5 +108,59 @@ public final class XEnumUtils {
             return false;
         }
         return true;
+    }
+
+    public static <E extends Enum<E> & EnumInterface<V>, V> Boolean contains(E e, String valueString) {
+        return Objects.equals(valueString, String.valueOf(e.getCode())) ||
+                Objects.equals(valueString, e.toString());
+    }
+
+    public static <T> Boolean contains(EnumInterface<T> e, String valueString) {
+        return Objects.equals(valueString, String.valueOf(e.getCode())) ||
+                Objects.equals(valueString, e.toString());
+    }
+
+    /**
+     * 获取枚举描述
+     *
+     * @param enumClass 继承了 {@link live.xiaoxu.enums.EnumDescInterface EnumDescInterface} 的枚举
+     * @return 描述集合
+     */
+    public static List<String> getDesc(Class<?> enumClass) {
+
+        return getDesc(enumClass, new Object[0]);
+    }
+
+    /**
+     * 获取枚举描述
+     *
+     * @param enumClass 继承了 {@link live.xiaoxu.enums.EnumDescInterface EnumDescInterface} 的枚举
+     * @return 描述集合
+     */
+    public static List<String> getDesc(Class<?> enumClass, Object[] os) {
+
+        try {
+            Class<?> aClass = Class.forName(enumClass.getName());
+            if (!XBeanUtils.implementsInterface(enumClass, EnumDescInterface.class)) {
+                return new ArrayList<>();
+            }
+            Method getMeaning = aClass.getDeclaredMethod("enhanceApiDesc");
+            Object[] oo = os.length == 0 ? aClass.getEnumConstants() : os;
+            return Arrays.stream(oo)
+                    .map(k -> {
+                        try {
+                            return getMeaning.invoke(k);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    })
+                    .filter(Objects::nonNull)
+                    .map(String::valueOf)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

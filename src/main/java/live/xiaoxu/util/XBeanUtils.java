@@ -1,13 +1,18 @@
 package live.xiaoxu.util;
 
 /**
- * bean工具
- * </p>
+ * <p>bean 工具类</p>
  *
- * @author Matt
- * @date 2021/9/3 21:42
+ * @author 小徐
+ * @since 2023/1/3 11:26
  */
 public final class XBeanUtils {
+
+    /**
+     * 禁止实例化
+     */
+    private XBeanUtils() {
+    }
 
     /**
      * 判断指定 class 是否实现指定 interface

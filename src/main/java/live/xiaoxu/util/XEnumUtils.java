@@ -25,6 +25,7 @@ public final class XEnumUtils {
      *
      * @param value 待查找枚举值
      * @param enums 待查找枚举枚举数组
+     * @param <T>   枚举泛型
      * @return 查找到的枚举
      */
     public static <T> EnumInterface<T> getByValue(Object value, EnumInterface<T>[] enums) {
@@ -44,6 +45,7 @@ public final class XEnumUtils {
      *
      * @param value 待查找枚举值
      * @param enums 待查找枚举枚举数组
+     * @param <T>   枚举泛型
      * @return 存在返回 true
      */
     public static <T> boolean containsByValue(Object value, EnumInterface<T>[] enums) {
@@ -61,6 +63,7 @@ public final class XEnumUtils {
      *
      * @param value 待查找枚举值
      * @param enums 待查找枚举枚举数组
+     * @param <T>   枚举泛型
      * @return 存在返回 true
      */
     public static <T> boolean containsByValue(Object value, Collection<EnumInterface<?>> enums) {
@@ -76,6 +79,8 @@ public final class XEnumUtils {
      *
      * @param value     待查找枚举值
      * @param enumClass 枚举 class
+     * @param <E>       枚举类型
+     * @param <V>       值类型
      * @return 查找到的枚举
      */
     public static <E extends Enum<E> & EnumInterface<V>, V> E getByClass(Object value, Class<E> enumClass) {
@@ -110,11 +115,24 @@ public final class XEnumUtils {
         return true;
     }
 
+    /**
+     * @param e           枚举
+     * @param valueString 枚举值
+     * @param <E>         枚举类型
+     * @param <V>         值类型
+     * @return true：存在
+     */
     public static <E extends Enum<E> & EnumInterface<V>, V> Boolean contains(E e, String valueString) {
         return Objects.equals(valueString, String.valueOf(e.getCode())) ||
                 Objects.equals(valueString, e.toString());
     }
 
+    /**
+     * @param e           枚举
+     * @param valueString 枚举值
+     * @param <T>         枚举泛型
+     * @return true：存在
+     */
     public static <T> Boolean contains(EnumInterface<T> e, String valueString) {
         return Objects.equals(valueString, String.valueOf(e.getCode())) ||
                 Objects.equals(valueString, e.toString());
@@ -135,6 +153,8 @@ public final class XEnumUtils {
      * 获取枚举描述
      *
      * @param enumClass 继承了 {@link live.xiaoxu.enums.EnumDescInterface EnumDescInterface} 的枚举
+     * @param os        <p>继承了 {@link live.xiaoxu.enums.EnumDescInterface EnumDescInterface} 的枚举值集合</p>
+     *                  <p>例：DemoEnum.class.getEnumConstants()</p>
      * @return 描述集合
      */
     public static List<String> getDesc(Class<?> enumClass, Object[] os) {

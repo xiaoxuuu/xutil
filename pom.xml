@@ -7,7 +7,7 @@
     <groupId>live.xiaoxu</groupId>
     <artifactId>xutil</artifactId>
     <version>1.0.2</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>XUtil</name>
     <description>A util based on JDK11</description>
     <url>https://github.com/xiaoxuuu/xutil</url>
@@ -115,7 +115,7 @@
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                     <!-- 如果希望发布后自动执行 close 和 release 操作，此处可以调整为 true -->
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <!-- source.jar -->

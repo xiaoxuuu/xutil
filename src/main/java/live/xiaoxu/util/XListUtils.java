@@ -1,8 +1,6 @@
 package live.xiaoxu.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * List工具类
@@ -145,5 +143,62 @@ public class XListUtils {
             return new ArrayList<>();
         }
         return lists.get(current - 1);
+    }
+
+
+    public static <T> boolean match(Collection<T> left, Collection<T> right) {
+
+        List<T> leftList = new LinkedList<>(left);
+        List<T> rightList = new LinkedList<>(right);
+        if (leftList.size() != rightList.size()) {
+            return false;
+        }
+        Iterator<T> leftIterator = leftList.iterator();
+        while (leftIterator.hasNext()) {
+            T next = leftIterator.next();
+            if (!rightList.contains(next)) {
+                return false;
+            }
+            leftIterator.remove();
+            rightList.remove(next);
+        }
+        return 0 == rightList.size();
+    }
+
+    /**
+     * 数组转集合
+     *
+     * @param array 数组
+     * @param <T>   泛型
+     * @return 集合
+     */
+    public static <T> List<T> create(T[] array) {
+
+        return new ArrayList<>(Arrays.asList(array));
+    }
+
+    /**
+     * 取出集合指定位置数据
+     *
+     * @param list   原集合
+     * @param index  指定位置
+     * @param length 取出个数
+     * @param <T>    泛型
+     * @return 结果
+     */
+    public static <T> List<T> subList(List<T> list, int index, int length) {
+
+        List<T> returnList = new ArrayList<>();
+        if (list.size() == 0 || index < 0 || length < 0) {
+            return returnList;
+        }
+        if (list.size() < index || list.size() < length) {
+            return returnList;
+        }
+
+        for (int i = 0; i < length; i++) {
+            returnList.add(list.get(index + i));
+        }
+        return returnList;
     }
 }

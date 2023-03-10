@@ -201,4 +201,25 @@ public class XListUtils {
         }
         return returnList;
     }
+
+    /**
+     * <p>集合相减</p>
+     * <p>集合 A - 集合 B</p>
+     *
+     * @param source      集合 A
+     * @param destination 集合 B
+     * @param <T>         泛型
+     * @return 结果
+     */
+    public static <T> List<T> reduce(List<T> source, List<T> destination) {
+
+        List<T> result = new ArrayList<>();
+        Set<T> destinationSet = new HashSet<>(destination);
+        for (T t : source) {
+            if (!destinationSet.contains(t)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
 }

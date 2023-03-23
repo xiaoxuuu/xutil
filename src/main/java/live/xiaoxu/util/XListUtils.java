@@ -1,6 +1,8 @@
 package live.xiaoxu.util;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * List工具类
@@ -219,6 +221,31 @@ public class XListUtils {
             if (!destinationSet.contains(t)) {
                 result.add(t);
             }
+        }
+        return result;
+    }
+
+    /**
+     * <p>将一个集合按照某种规则重新排序</p>
+     * <p>例如：User(int id)</p>
+     * <p>{@code List<User> userList = Arrays.asList(new User(2), new User(3), new User(1));}</p>
+     * <p>{@code List<Integer> idList = Arrays.asList(3, 2, 1);}</p>
+     * <p>{@code List<User> sortedList = resort(userList, idList, User::getId);}</p>
+     * <p>{@code sortedList：User[3], User[2], User[1]}</p>
+     *
+     * @param source       待排序集合
+     * @param sortRuleList 排序柜子
+     * @param keyMapper    待排序集合所依赖数据
+     * @param <T>          泛型
+     * @param <K>          泛型，泛型 T 的一个属性
+     * @return 排序后集合
+     */
+    public static <T, K> List<T> resort(List<T> source, List<K> sortRuleList, Function<? super T, ? extends K> keyMapper) {
+
+        List<T> result = new ArrayList<>();
+        Map<? extends K, T> collect = source.stream().collect(Collectors.toMap(keyMapper, a -> a));
+        for (K k : sortRuleList) {
+            result.add(collect.get(k));
         }
         return result;
     }

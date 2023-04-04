@@ -4,12 +4,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * List工具类
- * </p>
- *
- * @author Matt
- */
 public class XListUtils {
 
     /**
@@ -21,7 +15,6 @@ public class XListUtils {
     public static boolean isEmpty(final Collection<?> coll) {
         return coll == null || coll.isEmpty();
     }
-
 
     /**
      * <p>集合判非空，null 或集合 size 为 0 都返回 false</p>
@@ -99,21 +92,22 @@ public class XListUtils {
     }
 
     /**
-     * 将传入的 List 按照给定的 size 拆分成多个子 List
-     * 例如 list = [1, 2, 3, 4, 5], per=3
-     * 则会得到: [[1, 2, 3],[4, 5]]
-     * list = [1, 2, 3, 4, 5]  , per = 2
-     * 则会得到: [[1, 2], [3, 4], [5]]
-     * list = [1, 2, 3, 4, 5]  , per <= 0
-     * 则会得到: [[1, 2, 3, 4, 5]]
+     * <p>将传入的 List 按照给定的 size 拆分成多个子 List</p>
+     * <p>例如 list = [], per = ? ===>>> []</p>
+     * <p>例如 list = [1, 2, 3, 4, 5], per <= 0 ===>>> [[1, 2, 3, 4, 5]]</p>
+     * <p>例如 list = [1, 2, 3, 4, 5], per = 1  ===>>> [[1], [2], [3], [4], [5]]</p>
+     * <p>例如 list = [1, 2, 3, 4, 5], per = 2  ===>>> [[1, 2], [3, 4], [5]]</p>
+     * <p>例如 list = [1, 2, 3, 4, 5], per = 3  ===>>> [[1, 2, 3],[4, 5]]</p>
+     * <p>例如 list = [1, 2, 3, 4, 5], per >= 5  ===>>> [[1, 2, 3, 4, 5]]</p>
      */
     public static <T> List<List<T>> splitList(List<T> list, int per) {
 
-        if (per <= 0) {
-            per = list.size() + 1;
-        }
         List<List<T>> returnList = new ArrayList<>();
         if (isEmpty(list)) {
+            return returnList;
+        }
+        if (per <= 0) {
+            returnList.add(list);
             return returnList;
         }
         int count = list.size() / per;
@@ -124,6 +118,9 @@ public class XListUtils {
                 subList = list.subList(i * per, i * per + yu);
             } else {
                 subList = list.subList(i * per, per * (i + 1));
+            }
+            if (isEmpty(subList)) {
+                continue;
             }
             returnList.add(subList);
         }

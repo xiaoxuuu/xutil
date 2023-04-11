@@ -9,6 +9,28 @@ package live.xiaoxu.util;
 public final class XChineseUtils {
 
     /**
+     * 数字转字母 1-26 ： A-Z
+     */
+    public static String numberToLetter(int num) {
+
+        if (num <= 0) {
+            return null;
+        }
+        StringBuilder letter = new StringBuilder();
+        num--;
+        do {
+            if (letter.length() > 0) {
+                num--;
+            }
+            letter.insert(0, ((char) (num % 26 + (int) 'A')));
+            num = (num - num % 26) / 26;
+        }
+        while (num > 0);
+
+        return letter.toString();
+    }
+
+    /**
      * 字母转数字  A-Z ：1-26
      */
     public static int letterToNumber(String letter) {

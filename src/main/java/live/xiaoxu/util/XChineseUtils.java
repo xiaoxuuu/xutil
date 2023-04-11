@@ -1,5 +1,7 @@
 package live.xiaoxu.util;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * <p>汉字处理工具类</p>
  *
@@ -7,6 +9,24 @@ package live.xiaoxu.util;
  * @since 2023/4/9 11:58
  */
 public final class XChineseUtils {
+
+    /**
+     * 字符串编码转换
+     *
+     * @param str           要转换编码的字符串
+     * @param charsetName   原来的编码
+     * @param toCharsetName 转换后的编码
+     * @return 经过编码转换后的字符串
+     */
+    private static String conversionStr(String str, String charsetName, String toCharsetName) {
+
+        try {
+            str = new String(str.getBytes(charsetName), toCharsetName);
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException("字符串编码转换异常：" + ex.getMessage());
+        }
+        return str;
+    }
 
     /**
      * 数字转字母 1-26 ： A-Z

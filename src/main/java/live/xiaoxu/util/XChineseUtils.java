@@ -18,6 +18,26 @@ public final class XChineseUtils {
             "t", "w", "x", "y", "z"};
 
     /**
+     * 取得给定汉字串的首字母串,即声母串
+     *
+     * @param str 给定汉字串
+     * @return 声母串
+     */
+    public static String getAllFirstLetter(String str) {
+
+        if (str == null || str.trim().length() == 0) {
+            return "";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            stringBuilder.append(getFirstLetter(str.substring(i, i + 1)));
+        }
+
+        return stringBuilder.toString();
+    }
+
+    /**
      * 取得给定汉字的首字母,即声母
      *
      * @param chinese 给定的汉字

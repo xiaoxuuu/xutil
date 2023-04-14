@@ -1,4 +1,4 @@
-package live.xiaoxu.util;
+package live.xiaoxu.util.text;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

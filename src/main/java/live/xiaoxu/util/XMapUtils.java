@@ -2,8 +2,7 @@ package live.xiaoxu.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>map 工具类</p>
@@ -68,5 +67,20 @@ public class XMapUtils {
             e.printStackTrace();
         }
         return obj;
+    }
+
+    /**
+     * 递归读取所有字段
+     */
+    private static <T> List<Field> getAllFields(Class<? super T> clazz) {
+
+        List<Field> fieldList = new ArrayList<>();
+        if (null == clazz) {
+            return fieldList;
+        }
+        fieldList.addAll(Arrays.asList(clazz.getDeclaredFields()));
+        List<Field> superClassFieldList = getAllFields(clazz.getSuperclass());
+        fieldList.addAll(superClassFieldList);
+        return fieldList;
     }
 }

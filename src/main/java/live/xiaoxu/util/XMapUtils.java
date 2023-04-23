@@ -83,4 +83,25 @@ public class XMapUtils {
         fieldList.addAll(superClassFieldList);
         return fieldList;
     }
+
+    /**
+     * 将两个 map 集合数据相加
+     * <p>
+     * <font color="#FF0000">报错</font>
+     */
+    public static <K, V> Map<K, Collection<V>> plusMap(Map<K, Collection<V>> map1, Map<K, Collection<V>> map2) {
+
+        Map<K, Collection<V>> finalMap = new HashMap<>(map1);
+        map2.forEach((k, v) -> {
+            if (!finalMap.containsKey(k)) {
+                finalMap.put(k, v);
+            } else {
+                Collection<V> collection = finalMap.get(k);
+                Set<V> setFinal = new HashSet<>(collection);
+                setFinal.addAll(v);
+                finalMap.put(k, setFinal);
+            }
+        });
+        return finalMap;
+    }
 }

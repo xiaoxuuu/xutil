@@ -27,13 +27,13 @@ public final class XBeanUtils {
      * <p>判断指定 class 是否实现指定 interface</p>
      *
      * @param clazz      待判断类
-     * @param interfaces 待判断 interface
+     * @param _interface 待判断 interface
      * @return 实现 true
      */
-    public static boolean implementsInterface(Class<?> clazz, Class<?> interfaces) {
+    public static boolean implementsInterface(Class<?> clazz, Class<?> _interface) {
 
         for (Class<?> anInterface : clazz.getInterfaces()) {
-            if (anInterface.equals(interfaces)) {
+            if (anInterface.equals(_interface)) {
                 return true;
             }
         }
@@ -46,14 +46,14 @@ public final class XBeanUtils {
      * @param clazz 类
      * @return 包含的字段
      */
-    public static List<Field> getAllFields(Class<?> clazz) {
+    public static List<Field> getAllField(Class<?> clazz) {
 
         List<Field> fieldList = new ArrayList<>();
         if (null == clazz) {
             return fieldList;
         }
         fieldList.addAll(Arrays.asList(clazz.getDeclaredFields()));
-        List<Field> superClassFieldList = getAllFields(clazz.getSuperclass());
+        List<Field> superClassFieldList = getAllField(clazz.getSuperclass());
         fieldList.addAll(superClassFieldList);
         return fieldList;
     }
@@ -66,7 +66,7 @@ public final class XBeanUtils {
      * @param o         对象
      * @return 属性值
      */
-    public static Object getFieldValueByName(String fieldName, Object o) {
+    public static Object getFieldValueByFieldName(String fieldName, Object o) {
         try {
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "get" + firstLetter + fieldName.substring(1);
@@ -88,7 +88,7 @@ public final class XBeanUtils {
     public static void setValue(Object o, String value) throws NoSuchFieldException, IllegalAccessException {
 
         Class<?> clazz = o.getClass();
-        List<Field> fs = getAllFields(clazz);
+        List<Field> fs = getAllField(clazz);
 
         for (Field f : fs) {
             if (Modifier.isFinal(f.getModifiers())) {
@@ -98,7 +98,7 @@ public final class XBeanUtils {
             // 获取属性名
             String name = f.getName();
             String type = f.getType().getName();
-            if (null != getFieldValueByName(name, o)) {
+            if (null != getFieldValueByFieldName(name, o)) {
                 // 有属性值，跳过
                 continue;
             }

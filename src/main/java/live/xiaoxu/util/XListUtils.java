@@ -222,6 +222,56 @@ public class XListUtils {
         return result;
     }
 
+    public static <T> List<T> concat(List<T>... lists) {
+
+        List<T> list = new ArrayList<>();
+        for (List<T> tList : lists) {
+            if (isEmpty(tList)) {
+                continue;
+            }
+            list.addAll(tList);
+        }
+        return list;
+    }
+
+    /**
+     * 将 List 转换为 []
+     *
+     * @param list  List
+     * @param array 目标数组
+     * @return String[]
+     */
+    public static <T> T[] convertToArray(List<T> list, T[] array) {
+
+        if (isEmpty(list)) {
+            return array;
+        }
+        return list.toArray(array);
+    }
+
+    /**
+     * 取两集合交集
+     *
+     * @param left  集合1
+     * @param right 集合2
+     * @param <T>   数据类型
+     * @return 相交数据
+     */
+    public static <T> List<T> intersection(List<T> left, List<T> right) {
+
+        List<T> list = new ArrayList<>();
+        if (left == null || right == null || left.size() == 0 || right.size() == 0) {
+            return list;
+        }
+        HashSet<T> set = new HashSet<>(left);
+        right.forEach(k -> {
+            if (set.contains(k)) {
+                list.add(k);
+            }
+        });
+        return list;
+    }
+
     /**
      * <p>将一个集合按照某种规则重新排序</p>
      * <p>例如：User(int id)</p>

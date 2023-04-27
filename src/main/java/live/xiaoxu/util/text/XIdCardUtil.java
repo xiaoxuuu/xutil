@@ -23,25 +23,16 @@ import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 /**
- * <p>
- * 类说明:身份证合法性校验
- * </p>
- * <p>
- * --15位身份证号码：第7、8位为出生年份(两位数)，第9、10位为出生月份，第11、12位代表出生日期，第15位代表性别，奇数为男，偶数为女。
- * --18位身份证号码
- * ：第7、8、9、10位为出生年份(四位数)，第11、第12位为出生月份，第13、14位代表出生日期，第17位代表性别，奇数为男，偶数为女。
- * </p>
+ * <p>类说明:身份证合法性校验</p>
+ *
+ * <p>--15 位身份证号码：第 7、8 位为出生年份(两位数)，第 9、10 位为出生月份，第 11、12 位代表出生日期，第 15 位代表性别，奇数为男，偶数为女。</p>
+ * <p>--18 位身份证号码：第 7、8、9、10 位为出生年份(四位数)，第 11、12 位为出生月份，第 13、14 位代表出生日期，第 17 位代表性别，奇数为男，偶数为女。</p>
  */
 @SuppressWarnings({"unchecked", "unused", "all"})
 public class XIdCardUtil {
 
     /**
-     * 省，直辖市代码表： { 11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",
-     * 21:"辽宁",22:"吉林",23:"黑龙江",31:"上海",32:"江苏",
-     * 33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",
-     * 42:"湖北",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",
-     * 51:"四川",52:"贵州",53:"云南",54:"西藏",61:"陕西",62:"甘肃",
-     * 63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外"}
+     * <p>省，直辖市代码表</p>
      */
     protected String codeAndCity[][] = {{"11", "北京"}, {"12", "天津"},
             {"13", "河北"}, {"14", "山西"}, {"15", "内蒙古"}, {"21", "辽宁"},
@@ -59,20 +50,19 @@ public class XIdCardUtil {
             "64", "65", "71", "81", "82", "91"};
     // 每位加权因子
     private int power[] = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
-    // 第18位校检码
+    // 第 18 位校检码
     private String verifyCode[] = {"1", "0", "X", "9", "8", "7", "6", "5",
             "4", "3", "2"};
 
     public static void main(String[] args) throws Exception {
 
-        //15位
+        // 15 位
         String idCard15 = "142431199001145";
-        //18位
+        // 18 位
         String idCard18 = "121212121212121212";
         XIdCardUtil iv = new XIdCardUtil();
         System.out.println(iv.isValidatedAllIdCard(idCard15));
         System.out.println(iv.isValidatedAllIdCard(idCard18));
-
     }
 
     /**
@@ -305,7 +295,7 @@ public class XIdCardUtil {
     }
 
     /**
-     * 15位身份证号码的基本数字和位数验校
+     * 15 位身份证号码的基本数字和位数验校
      */
     public boolean is15IdCard(String idCard) {
         return idCard != null && !"".equals(idCard) && Pattern.matches(
@@ -314,7 +304,7 @@ public class XIdCardUtil {
     }
 
     /**
-     * 18位身份证号码的基本数字和位数验校
+     * 18 位身份证号码的基本数字和位数验校
      */
     public boolean is18IdCard(String idCard) {
         return Pattern.matches("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([\\d|x|X]{1})$",
@@ -350,7 +340,7 @@ public class XIdCardUtil {
     }
 
     /**
-     * 将和值与11取模得到余数进行校验码判断
+     * 将和值与 11 取模得到余数进行校验码判断
      */
     public String getCheckCodeBySum(int sum17) {
         String checkCode = null;

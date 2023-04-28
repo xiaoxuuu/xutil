@@ -2,26 +2,23 @@ package live.xiaoxu.util;
 
 import live.xiaoxu.constants.DateConstants;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * <p>日期工具类</p>
+ * <p>时区使用系统时区</p>
  *
  * @author 小徐
  * @since 2023/1/3 16:51
  */
 public class XDateUtils {
+
+    private static final ZoneId ZONE_ID = ZoneId.systemDefault();
 
     /**
      * {@link java.util.Date Date} 转 {@link java.time.LocalDateTime LocalDateTime}
@@ -32,8 +29,7 @@ public class XDateUtils {
     public static LocalDateTime dateToLocalDateTime(Date date) {
 
         Instant instant = date.toInstant();
-        ZoneId zoneId = ZoneId.systemDefault();
-        return instant.atZone(zoneId).toLocalDateTime();
+        return instant.atZone(ZONE_ID).toLocalDateTime();
     }
 
     /**
@@ -44,62 +40,68 @@ public class XDateUtils {
      */
     public static Date localDateTimeToDate(LocalDateTime localDateTime) {
 
-        ZoneId zoneId = ZoneId.systemDefault();
-        ZonedDateTime zdt = localDateTime.atZone(zoneId);
+        ZonedDateTime zdt = localDateTime.atZone(ZONE_ID);
         return Date.from(zdt.toInstant());
     }
 
     /**
-     * 获取当前年份
+     * {@link java.lang.String String} 转 {@link java.time.LocalDateTime LocalDateTime}
      *
-     * @return 当前年份
+     * @param date    日期
+     * @param pattern 日期格式，参考：{@link live.xiaoxu.constants.DateConstants DateConstants}
+     * @return 转换结果
      */
-    public static int getCurrentYear() {
-        return Integer.parseInt(format(LocalDateTime.now(), DateConstants.YEAR));
+    public static LocalDateTime stringToLocalDateTime(String date, String pattern) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return LocalDateTime.parse(date, formatter);
     }
 
     /**
-     * 获取当前时间
+     * {@link java.lang.String String} 转 {@link java.time.LocalDateTime LocalDateTime}
      *
-     * @return 当前时间
+     * @param date 日期，默认格式：{@link live.xiaoxu.constants.DateConstants#DEFAULT_DATE_FORMAT DateConstants.DEFAULT_DATE_FORMAT}
+     * @return 转换结果
      */
-    public static String getNowTime() {
-        return format(LocalDateTime.now(), DateConstants.DEFAULT_DATE_FORMAT);
+    public static LocalDateTime stringToLocalDateTime(String date) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateConstants.DEFAULT_DATE_FORMAT);
+        return LocalDateTime.parse(date, formatter);
     }
 
     /**
-     * 获取当前时间
+     * {@link java.time.LocalDateTime LocalDateTime} 转 {@link java.lang.String String}
      *
-     * @param pattern 样式
-     * @return 当前时间
+     * @param localDateTime 日期
+     * @param pattern       日期格式，参考：{@link live.xiaoxu.constants.DateConstants DateConstants}
+     * @return 转换结果
      */
-    public static String getNowTime(String pattern) {
-        return format(LocalDateTime.now(), pattern);
+    public static String localDateTimeToString(LocalDateTime localDateTime, String pattern) {
+
+        return localDateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
     /**
-     * 格式化时间
+     * {@link java.time.LocalDateTime LocalDateTime} 转 {@link java.lang.String String}
      *
-     * @param localDateTime 指定时间
-     * @param pattern       样式
-     * @return 结果
+     * @param localDateTime 日期，默认格式：{@link live.xiaoxu.constants.DateConstants#DEFAULT_DATE_FORMAT DateConstants.DEFAULT_DATE_FORMAT}
+     * @return 转换结果
      */
-    public static String format(LocalDateTime localDateTime, String pattern) {
+    public static String localDateTimeToString(LocalDateTime localDateTime) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, Locale.CHINA);
-        return localDateTime.format(formatter);
+        return localDateTime.format(DateTimeFormatter.ofPattern(DateConstants.DEFAULT_DATE_FORMAT));
     }
 
     /**
-     * 格式化时间
+     * {@link java.util.Date Date} 转 {@link java.lang.String String}
      *
      * @param date    指定时间
      * @param pattern 样式
      * @return 结果
      */
-    public static String format(Date date, String pattern) {
+    public static String dateToString(Date date, String pattern) {
 
-        return format(dateToLocalDateTime(date), pattern);
+        return localDateTimeToString(dateToLocalDateTime(date), pattern);
     }
 
     /**
@@ -109,14 +111,42 @@ public class XDateUtils {
      * @param pattern 格式化字符串
      * @return 结果
      */
-    public static Date parse(String date, String pattern) {
+    public static Date stringToDate(String date, String pattern) {
 
-        DateFormat df = new SimpleDateFormat(pattern);
-        try {
-            return df.parse(date);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        return localDateTimeToDate(stringToLocalDateTime(date, pattern));
+    }
+
+    public static String formatDate(Date date, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
+    }
+
+    /**
+     * 获取当前年份
+     *
+     * @return 当前年份
+     */
+    public static int getCurrentYear() {
+        return Integer.parseInt(localDateTimeToString(LocalDateTime.now(), DateConstants.YEAR));
+    }
+
+    /**
+     * 获取当前时间
+     *
+     * @return 当前时间
+     */
+    public static String getNowTime() {
+        return localDateTimeToString(LocalDateTime.now(), DateConstants.DEFAULT_DATE_FORMAT);
+    }
+
+    /**
+     * 获取当前时间
+     *
+     * @param pattern 样式
+     * @return 当前时间
+     */
+    public static String getNowTime(String pattern) {
+        return localDateTimeToString(LocalDateTime.now(), pattern);
     }
 
     /**
@@ -147,5 +177,45 @@ public class XDateUtils {
             yearList.add(targetYear - i);
         }
         return yearList;
+    }
+
+    /**
+     * <p>比较时间大小，会自动对时间进行转换</p>
+     *
+     * @param l1 时间1
+     * @param l2 时间2
+     * @return 时间1 > 时间2 = true
+     */
+    public static boolean moreThan(Object l1, Object l2) {
+
+        return cast(l1).isAfter(cast(l2));
+    }
+
+    /**
+     * <p>将常见日期自动转换为 {@link java.time.LocalDateTime LocalDateTime}</p>
+     * <p>{@link java.lang.String String} 类型默认使用 {@link XDateUtils#stringToLocalDateTime(String date) XDateUtils.stringToLocalDateTime(String date)} 方法</p>
+     *
+     * @param o 日期
+     * @return 结果
+     */
+    private static LocalDateTime cast(Object o) {
+
+        if (null == o) {
+            return null;
+        } else if (o instanceof String) {
+            return stringToLocalDateTime((String) o);
+        } else if (o instanceof Date) {
+            return dateToLocalDateTime((Date) o);
+        } else if (o instanceof LocalDateTime) {
+            return (LocalDateTime) o;
+        } else if (o instanceof Instant) {
+            return ((Instant) o).atZone(ZONE_ID).toLocalDateTime();
+        } else if (o instanceof LocalDate) {
+            return ((LocalDate) o).atStartOfDay(ZONE_ID).toLocalDateTime();
+        } else if (o instanceof ZonedDateTime) {
+            return ((ZonedDateTime) o).toLocalDateTime();
+        } else {
+            throw new RuntimeException("日期转换时遇到暂不支持的数据类型");
+        }
     }
 }

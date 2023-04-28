@@ -1,6 +1,6 @@
 package live.xiaoxu.util.math;
 
-import live.xiaoxu.util.XStringUtils;
+import live.xiaoxu.util.text.XStringUtils;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

@@ -415,7 +415,7 @@ public class XMathUtils {
         } else if (o instanceof AtomicInteger) {
             b = new BigDecimal(String.valueOf(((AtomicInteger) o).get()));
         } else {
-            throw new RuntimeException("数据转换时遇到暂不支持的数据类型");
+            throw new RuntimeException("数字转换时遇到暂不支持的数据类型");
         }
         return b;
     }

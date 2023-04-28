@@ -59,6 +59,24 @@ public final class XBeanUtils {
     }
 
     /**
+     * 获取字段
+     *
+     * @param clazz     类
+     * @param fieldName 字段名
+     * @param <T>       泛型
+     * @return 字段方法
+     */
+    public static <T> Field getField(Class<T> clazz, String fieldName) {
+
+        for (Field field : getAllFields(clazz)) {
+            if (field.getName().equals(fieldName)) {
+                return field;
+            }
+        }
+        return null;
+    }
+
+    /**
      * <p>根据属性名获取属性值</p>
      * <p>本质是调用 get 方法，故如果没有 get 方法则无法获取</p>
      *

@@ -68,7 +68,7 @@ public final class XBeanUtils {
      */
     public static <T> Field getField(Class<T> clazz, String fieldName) {
 
-        for (Field field : getAllFields(clazz)) {
+        for (Field field : getAllField(clazz)) {
             if (field.getName().equals(fieldName)) {
                 return field;
             }

@@ -198,7 +198,7 @@ public class XDateUtils {
      * @param o 日期
      * @return 结果
      */
-    private static LocalDateTime cast(Object o) {
+    public static LocalDateTime cast(Object o) {
 
         if (null == o) {
             return null;

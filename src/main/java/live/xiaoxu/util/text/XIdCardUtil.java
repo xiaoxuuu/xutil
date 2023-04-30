@@ -1,17 +1,11 @@
 package live.xiaoxu.util.text;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 /**
  * <p>类说明:身份证合法性校验</p>
  *
- * <p>--15 位身份证号码：第 7、8 位为出生年份(两位数)，第 9、10 位为出生月份，第 11、12 位代表出生日期，第 15 位代表性别，奇数为男，偶数为女。</p>
- * <p>--18 位身份证号码：第 7、8、9、10 位为出生年份(四位数)，第 11、12 位为出生月份，第 13、14 位代表出生日期，第 17 位代表性别，奇数为男，偶数为女。</p>
+ * <p>18 位身份证号码：第 7、8、9、10 位为出生年份(四位数)，第 11、12 位为出生月份，第 13、14 位代表出生日期，第 17 位代表性别，奇数为男，偶数为女。</p>
  */
 @SuppressWarnings({"all"})
 public class XIdCardUtil {
@@ -19,7 +13,7 @@ public class XIdCardUtil {
     /**
      * <p>省，直辖市代码表</p>
      */
-    protected String codeAndCity[][] = {{"11", "北京"}, {"12", "天津"},
+    private static String codeAndCity[][] = {{"11", "北京"}, {"12", "天津"},
             {"13", "河北"}, {"14", "山西"}, {"15", "内蒙古"}, {"21", "辽宁"},
             {"22", "吉林"}, {"23", "黑龙江"}, {"31", "上海"}, {"32", "江苏"},
             {"33", "浙江"}, {"34", "安徽"}, {"35", "福建"}, {"36", "江西"},
@@ -29,39 +23,21 @@ public class XIdCardUtil {
             {"61", "陕西"}, {"62", "甘肃"}, {"63", "青海"}, {"64", "宁夏"},
             {"65", "新疆"}, {"71", "台湾"}, {"81", "香港"}, {"82", "澳门"},
             {"91", "国外"}};
-    private String cityCode[] = {"11", "12", "13", "14", "15", "21", "22",
+
+    private static String cityCode[] = {"11", "12", "13", "14", "15", "21", "22",
             "23", "31", "32", "33", "34", "35", "36", "37", "41", "42", "43",
             "44", "45", "46", "50", "51", "52", "53", "54", "61", "62", "63",
             "64", "65", "71", "81", "82", "91"};
-    // 每位加权因子
-    private int power[] = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
-    // 第 18 位校检码
-    private String verifyCode[] = {"1", "0", "X", "9", "8", "7", "6", "5",
-            "4", "3", "2"};
-
-    public static void main(String[] args) throws Exception {
-
-        // 15 位
-        String idCard15 = "142431199001145";
-        // 18 位
-        String idCard18 = "121212121212121212";
-        XIdCardUtil iv = new XIdCardUtil();
-        System.out.println(iv.isValidatedAllIdCard(idCard15));
-        System.out.println(iv.isValidatedAllIdCard(idCard18));
-    }
 
     /**
-     * 验证所有的身份证的合法性
-     *
-     * @param idCard 身份证
-     * @return 结果
+     * 每位加权因子
      */
-    public boolean isValidatedAllIdCard(String idCard) {
-        if (idCard.length() == 15) {
-            idCard = this.convertIdcarBy15bit(idCard);
-        }
-        return this.isValidate18IdCard(idCard);
-    }
+    private static int power[] = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
+
+    /**
+     * 第 18 位校检码
+     */
+    private static String verifyCode[] = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
 
     /**
      * <p>判断 18 位身份证的合法性</p>
@@ -83,10 +59,16 @@ public class XIdCardUtil {
      * <p>3. 用加出来和除以 11，看余数是多少？</p>
      * <p>4. 余数只可能有 0 1 2 3 4 5 6 7 8 9 10 这 11 个数字。其分别对应的最后一位身份证的号码为 1 0 X 9 8 7 6 5 4 3 2。</p>
      * <p>5. 通过上面得知如果余数是 2，就会在身份证的第 18 位数字上出现罗马数字的 Ⅹ。如果余数是 10，身份证的最后一位号码就是 2。</p>
+     *
+     * @param idCard 18 位身份证号
+     * @return 成功返回 true
      */
-    public boolean isValidate18IdCard(String idCard) {
-        // 非18位为假
+    public static boolean validate(String idCard) {
+        // 非 18 位为假
         if (idCard.length() != 18) {
+            return false;
+        }
+        if (!is18IdCard(idCard)) {
             return false;
         }
         // 获取前 17 位
@@ -125,188 +107,33 @@ public class XIdCardUtil {
     }
 
     /**
-     * 验证 15 位身份证的合法性，该方法验证不准确，最好是将 15 转为 18 位后再判断，该类中已提供。
-     *
-     * @param idCard 身份证号
-     * @return 是否为合法身份证号
-     */
-    public boolean isValidate15IdCard(String idCard) {
-
-        // 非 15 位为假
-        if (idCard.length() != 15) {
-            return false;
-        }
-
-        // 是否全都为数字
-        if (isDigital(idCard)) {
-            String provinceid = idCard.substring(0, 2);
-            String birthday = idCard.substring(6, 12);
-            int year = Integer.parseInt(idCard.substring(6, 8));
-            int month = Integer.parseInt(idCard.substring(8, 10));
-            int day = Integer.parseInt(idCard.substring(10, 12));
-
-            // 判断是否为合法的省份
-            boolean flag = false;
-            for (String id : cityCode) {
-                if (id.equals(provinceid)) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag) {
-                return false;
-            }
-            // 该身份证生出日期在当前日期之后时为假
-            Date birthdate = null;
-            try {
-                birthdate = new SimpleDateFormat("yyMMdd").parse(birthday);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (birthdate == null || new Date().before(birthdate)) {
-                return false;
-            }
-
-            // 判断是否为合法的年份
-            GregorianCalendar curDay = new GregorianCalendar();
-            int curYear = curDay.get(Calendar.YEAR);
-            int year2bit = Integer.parseInt(String.valueOf(curYear)
-                    .substring(2));
-
-            // 判断该年份的两位表示法，小于 50 的和大于当前年份的，为假
-            if ((year < 50 && year > year2bit)) {
-                return false;
-            }
-
-            // 判断是否为合法的月份
-            if (month < 1 || month > 12) {
-                return false;
-            }
-
-            // 判断是否为合法的日期
-            boolean mflag = false;
-            curDay.setTime(birthdate); // 将该身份证的出生日期赋于对象curDay
-            switch (month) {
-                case 1:
-                case 3:
-                case 5:
-                case 7:
-                case 8:
-                case 10:
-                case 12:
-                    mflag = (day >= 1 && day <= 31);
-                    break;
-                case 2: // 公历的2月非闰年有28天,闰年的2月是29天。
-                    if (curDay.isLeapYear(curDay.get(Calendar.YEAR))) {
-                        mflag = (day >= 1 && day <= 29);
-                    } else {
-                        mflag = (day >= 1 && day <= 28);
-                    }
-                    break;
-                case 4:
-                case 6:
-                case 9:
-                case 11:
-                    mflag = (day >= 1 && day <= 30);
-                    break;
-            }
-            return mflag;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * 将 15 位的身份证转成18位身份证
-     *
-     * @param idCard 身份证号
-     * @return 18 位身份证号
-     */
-    public String convertIdcarBy15bit(String idCard) {
-        String idcard17 = null;
-        // 非 15 位身份证
-        if (idCard.length() != 15) {
-            return null;
-        }
-
-        if (isDigital(idCard)) {
-            // 获取出生年月日
-            String birthday = idCard.substring(6, 12);
-            Date birthdate = null;
-            try {
-                birthdate = new SimpleDateFormat("yyMMdd").parse(birthday);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Calendar cday = Calendar.getInstance();
-            cday.setTime(birthdate);
-            String year = String.valueOf(cday.get(Calendar.YEAR));
-
-            idcard17 = idCard.substring(0, 6) + year + idCard.substring(8);
-
-            char c[] = idcard17.toCharArray();
-            String checkCode = "";
-
-            if (null != c) {
-                int bit[] = new int[idcard17.length()];
-
-                // 将字符数组转为整型数组
-                bit = converCharToInt(c);
-                int sum17 = 0;
-                sum17 = getPowerSum(bit);
-
-                // 获取和值与11取模得到余数进行校验码
-                checkCode = getCheckCodeBySum(sum17);
-                // 获取不到校验位
-                if (null == checkCode) {
-                    return null;
-                }
-
-                // 将前17位与第18位校验码拼接
-                idcard17 += checkCode;
-            }
-        } else { // 身份证包含数字
-            return null;
-        }
-        return idcard17;
-    }
-
-    /**
-     * 15 位和 18 位身份证号码的基本数字和位数验校
-     */
-    public boolean isIdCard(String idCard) {
-        return idCard != null && !"".equals(idCard) && Pattern.matches(
-                "(^\\d{15}$)|(\\d{17}(?:\\d|x|X)$)", idCard);
-    }
-
-    /**
-     * 15 位身份证号码的基本数字和位数验校
-     */
-    public boolean is15IdCard(String idCard) {
-        return idCard != null && !"".equals(idCard) && Pattern.matches(
-                "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$",
-                idCard);
-    }
-
-    /**
      * 18 位身份证号码的基本数字和位数验校
+     *
+     * @param idCard 校验是否是 18 位身份证
+     * @return 成功返回 true
      */
-    public boolean is18IdCard(String idCard) {
+    public static boolean is18IdCard(String idCard) {
         return Pattern.matches("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([\\d|x|X]{1})$",
                 idCard);
     }
 
     /**
      * 数字验证
+     *
+     * @param str 前置校验
+     * @return 通过返回 true
      */
-    public boolean isDigital(String str) {
+    public static boolean isDigital(String str) {
         return str != null && !"".equals(str) && str.matches("^[0-9]*$");
     }
 
     /**
      * 将身份证的每位和对应位的加权因子相乘之后，再得到和值
+     *
+     * @param bit 身份证数组
+     * @return 值
      */
-    public int getPowerSum(int[] bit) {
+    public static int getPowerSum(int[] bit) {
 
         int sum = 0;
 
@@ -325,52 +152,47 @@ public class XIdCardUtil {
     }
 
     /**
-     * 将和值与 11 取模得到余数进行校验码判断
+     * 获取值与 11 取模得到余数校验码
+     *
+     * @param sum17 余数
+     * @return 校验码
      */
-    public String getCheckCodeBySum(int sum17) {
-        String checkCode = null;
+    public static String getCheckCodeBySum(int sum17) {
         switch (sum17 % 11) {
             case 10:
-                checkCode = "2";
-                break;
+                return "2";
             case 9:
-                checkCode = "3";
-                break;
+                return "3";
             case 8:
-                checkCode = "4";
-                break;
+                return "4";
             case 7:
-                checkCode = "5";
-                break;
+                return "5";
             case 6:
-                checkCode = "6";
-                break;
+                return "6";
             case 5:
-                checkCode = "7";
-                break;
+                return "7";
             case 4:
-                checkCode = "8";
-                break;
+                return "8";
             case 3:
-                checkCode = "9";
-                break;
+                return "9";
             case 2:
-                checkCode = "x";
-                break;
+                return "x";
             case 1:
-                checkCode = "0";
-                break;
+                return "0";
             case 0:
-                checkCode = "1";
-                break;
+                return "1";
         }
-        return checkCode;
+        return null;
     }
 
     /**
      * 将字符数组转为整型数组
+     *
+     * @param c 数组
+     * @return 整型结果
+     * @throws NumberFormatException 转换异常
      */
-    public int[] converCharToInt(char[] c) throws NumberFormatException {
+    public static int[] converCharToInt(char[] c) throws NumberFormatException {
         int[] a = new int[c.length];
         int k = 0;
         for (char temp : c) {

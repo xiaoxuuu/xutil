@@ -97,6 +97,9 @@ public final class XChineseUtils {
 
     /**
      * 数字转字母 1-26 ： A-Z
+     *
+     * @param num 数字
+     * @return 字母
      */
     public static String numberToLetter(int num) {
 
@@ -119,6 +122,9 @@ public final class XChineseUtils {
 
     /**
      * 字母转数字  A-Z ：1-26
+     *
+     * @param letter 字母
+     * @return 数字
      */
     public static int letterToNumber(String letter) {
 

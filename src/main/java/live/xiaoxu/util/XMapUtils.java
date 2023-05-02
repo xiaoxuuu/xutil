@@ -20,7 +20,7 @@ public class XMapUtils {
      * 实体对象转成Map
      *
      * @param obj 实体对象
-     * @return Map<String, Object>
+     * @return {@code Map<String, Object>}
      */
     public static Map<String, Object> objectToMap(Object obj) {
         Map<String, Object> map = new HashMap<>();
@@ -71,6 +71,10 @@ public class XMapUtils {
 
     /**
      * 递归读取所有字段
+     *
+     * @param clazz 待读取类
+     * @param <T>   泛型
+     * @return 所有字段集合
      */
     private static <T> List<Field> getAllFields(Class<? super T> clazz) {
 
@@ -85,9 +89,13 @@ public class XMapUtils {
     }
 
     /**
-     * 将两个 map 集合数据相加
-     * <p>
-     * <font color="#FF0000">报错</font>
+     * 将两个 map 集合数据相加 TODO 报错
+     *
+     * @param map1 第一个 map
+     * @param map2 第二个 map
+     * @param <K>  map 的 key
+     * @param <V>  map 的 value
+     * @return 想加的结果
      */
     public static <K, V> Map<K, Collection<V>> plusMap(Map<K, Collection<V>> map1, Map<K, Collection<V>> map2) {
 

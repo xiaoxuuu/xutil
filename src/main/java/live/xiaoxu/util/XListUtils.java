@@ -27,13 +27,15 @@ public class XListUtils {
     }
 
     /**
-     * 将传入的 List 按照给定的 index 拆分成 2 个子 List
-     * 例如 list = [1, 2, 3, 4, 5], index = 3
-     * 则会得到: [[1, 2, 3],[4, 5]]
-     * list = [1, 2, 3, 4, 5]  , index = 2
-     * 则会得到: [[1, 2], [3, 4, 5]]
-     * list = [1, 2, 3, 4, 5]  , index <= 0
-     * 则会得到: [[1, 2, 3, 4, 5]]
+     * <p>将传入的 List 按照给定的 index 拆分成 2 个子 List</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], index = 3 ===>>> [[1, 2, 3],[4, 5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5]  , index = 2 ===>>> [[1, 2], [3, 4, 5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5]  , index <= 0 ===>>> [[1, 2, 3, 4, 5]]}</p>
+     *
+     * @param list  待拆分集合
+     * @param index 拆分为几个集合
+     * @param <T>   类型
+     * @return 拆分结果
      */
     public static <T> List<List<T>> subList(List<T> list, Integer index) {
 
@@ -93,12 +95,17 @@ public class XListUtils {
 
     /**
      * <p>将传入的 List 按照给定的 size 拆分成多个子 List</p>
-     * <p>例如 list = [], per = ? ===>>> []</p>
-     * <p>例如 list = [1, 2, 3, 4, 5], per <= 0 ===>>> [[1, 2, 3, 4, 5]]</p>
-     * <p>例如 list = [1, 2, 3, 4, 5], per = 1  ===>>> [[1], [2], [3], [4], [5]]</p>
-     * <p>例如 list = [1, 2, 3, 4, 5], per = 2  ===>>> [[1, 2], [3, 4], [5]]</p>
-     * <p>例如 list = [1, 2, 3, 4, 5], per = 3  ===>>> [[1, 2, 3],[4, 5]]</p>
-     * <p>例如 list = [1, 2, 3, 4, 5], per >= 5  ===>>> [[1, 2, 3, 4, 5]]</p>
+     * <p>例如：{@code list = [], per = ? ===>>> []}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per <= 0 ===>>> [[1, 2, 3, 4, 5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 1  ===>>> [[1], [2], [3], [4], [5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 2  ===>>> [[1, 2], [3, 4], [5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 3  ===>>> [[1, 2, 3],[4, 5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per >= 5  ===>>> [[1, 2, 3, 4, 5]]}</p>
+     *
+     * @param list 待分割数据
+     * @param per  每个集合大小
+     * @param <T>  类型
+     * @return 分割结果
      */
     public static <T> List<List<T>> splitList(List<T> list, int per) {
 
@@ -235,11 +242,12 @@ public class XListUtils {
     }
 
     /**
-     * 将 List 转换为 []
+     * 将 List 转换为数组
      *
-     * @param list  List
+     * @param list  list
      * @param array 目标数组
-     * @return String[]
+     * @param <T>   类型
+     * @return 结果{@code String[]}
      */
     public static <T> T[] convertToArray(List<T> list, T[] array) {
 

@@ -29,7 +29,6 @@ public class XStringUtils {
         return null == str || str.trim().length() == 0;
     }
 
-
     /**
      * <p>是否包含字符串</p>
      *

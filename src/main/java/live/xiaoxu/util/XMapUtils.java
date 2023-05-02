@@ -13,7 +13,7 @@ import java.util.*;
 public class XMapUtils {
 
     private XMapUtils() {
-        throw new IllegalAccessError("MapUtils.class");
+        throw new IllegalAccessError("XMapUtils.class");
     }
 
     /**

@@ -26,14 +26,14 @@ public final class XBeanUtils {
     /**
      * <p>判断指定 class 是否实现指定 interface</p>
      *
-     * @param clazz      待判断类
-     * @param _interface 待判断 interface
+     * @param clazz          待判断类
+     * @param interfaceClass 待判断 interface
      * @return 实现 true
      */
-    public static boolean implementsInterface(Class<?> clazz, Class<?> _interface) {
+    public static boolean implementsInterface(Class<?> clazz, Class<?> interfaceClass) {
 
         for (Class<?> anInterface : clazz.getInterfaces()) {
-            if (anInterface.equals(_interface)) {
+            if (anInterface.equals(interfaceClass)) {
                 return true;
             }
         }

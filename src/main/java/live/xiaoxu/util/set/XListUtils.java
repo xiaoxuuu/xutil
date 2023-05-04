@@ -1,4 +1,4 @@
-package live.xiaoxu.util;
+package live.xiaoxu.util.set;
 
 import java.util.*;
 import java.util.function.Function;

@@ -6,9 +6,23 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * <p>随机日期</p>
+ *
+ * @author 小徐
+ * @since 2023/4/28 10:45
+ */
 public class XRandomDate {
 
+    /**
+     * 最小时间
+     */
     private LocalDateTime left;
+
+
+    /**
+     * 最大时间
+     */
     private LocalDateTime right;
 
     /**

@@ -5,7 +5,17 @@ import java.security.MessageDigest;
 public class XMD5Util {
 
     /**
+     * 禁止实例化
+     */
+    private XMD5Util() {
+        throw new IllegalAccessError("XMD5Util.class");
+    }
+
+    /**
      * 生成 MD5
+     *
+     * @param message 源数据
+     * @return 结果
      */
     public static String getMD5(String message) {
         String md5str = "";
@@ -30,6 +40,9 @@ public class XMD5Util {
 
     /**
      * 二进制转十六进制
+     *
+     * @param bytes 二进制
+     * @return 十六进制结果
      */
     public static String bytesToHex(byte[] bytes) {
         StringBuilder md5str = new StringBuilder();

@@ -2,7 +2,6 @@ package live.xiaoxu.util.random;
 
 /**
  * <p>生成随机姓名</p>
- * <a href="https://www.mps.gov.cn/n2254314/n6409334/c7726021/content.html">参考数据：《二〇二〇年全国姓名报告》发布 - 公安部户政管理研究中心 </a>
  *
  * @author 小徐
  * @since 2023/5/6 10:39
@@ -10,9 +9,14 @@ package live.xiaoxu.util.random;
 public class XRandomName {
 
     /**
+     * 默认脱敏字
+     */
+    private static final String DEFAULT_DESENSITIZATION_NAME = "某";
+
+    /**
      * 姓
      */
-    private static final String[] SURN_NAME = {"李", "王", "张", "刘", "陈", "杨", "赵", "黄", "周", "吴", "徐", "孙", "胡",
+    private static final String[] SURNNAME = {"李", "王", "张", "刘", "陈", "杨", "赵", "黄", "周", "吴", "徐", "孙", "胡",
             "朱", "高", "林", "何", "郭", "马", "罗", "梁", "宋", "郑", "谢", "韩", "唐", "冯", "于", "董", "萧", "程", "曹",
             "袁", "邓", "许", "傅", "沈", "曾", "彭", "吕", "苏", "卢", "蒋", "蔡", "贾", "丁", "魏", "薛", "叶", "阎", "余",
             "潘", "杜", "戴", "夏", "钟", "汪", "田", "任", "姜", "范", "方", "石", "姚", "谭", "廖", "邹", "熊", "金", "陆",
@@ -33,7 +37,7 @@ public class XRandomName {
     /**
      * 复姓
      */
-    private static final String[] DOUBLE_SURN_NAME = {"欧阳", "上官", "皇甫", "令狐", "诸葛", "司徒", "司马", "申屠",
+    private static final String[] DOUBLE_SURNNAME = {"欧阳", "上官", "皇甫", "令狐", "诸葛", "司徒", "司马", "申屠",
             "夏侯", "贺兰", "完颜", "慕容", "尉迟", "长孙"};
 
     /**
@@ -116,5 +120,98 @@ public class XRandomName {
      * 禁止无参实例化
      */
     private XRandomName() {
+    }
+
+    /**
+     * <p>初始化</p>
+     * <p>useSurname：true</p>
+     * <p>useDoubleSurname：true</p>
+     * <p>useName：true</p>
+     * <p>useDoubleName：true</p>
+     * <p>desensitizationLength：0</p>
+     * <p>desensitizationName：某</p>
+     *
+     * @return this
+     */
+    public static XRandomName init() {
+        return new XRandomName()
+                .setUseSurname(true)
+                .setUseDoubleSurname(true)
+                .setUseName(true)
+                .setUseDoubleName(true)
+                .setDesensitizationLength(0)
+                .setDesensitizationName(DEFAULT_DESENSITIZATION_NAME);
+    }
+
+    /**
+     * 设置是否使用单字姓
+     *
+     * @param useSurname 是否使用单字姓
+     * @return this
+     */
+    public XRandomName setUseSurname(Boolean useSurname) {
+
+        this.useSurname = useSurname;
+        return this;
+    }
+
+    /**
+     * 设置是否使用复姓
+     *
+     * @param useDoubleSurname 是否使用复姓
+     * @return this
+     */
+    public XRandomName setUseDoubleSurname(Boolean useDoubleSurname) {
+
+        this.useDoubleSurname = useDoubleSurname;
+        return this;
+    }
+
+    /**
+     * 设置是否使用单字名
+     *
+     * @param useName 是否使用单字名
+     * @return this
+     */
+    public XRandomName setUseName(Boolean useName) {
+
+        this.useName = useName;
+        return this;
+    }
+
+    /**
+     * 设置是否使用双字名
+     *
+     * @param useDoubleName 是否使用双字名
+     * @return this
+     */
+    public XRandomName setUseDoubleName(Boolean useDoubleName) {
+
+        this.useDoubleName = useDoubleName;
+        return this;
+    }
+
+    /**
+     * 设置脱敏长度
+     *
+     * @param desensitizationLength 脱敏长度
+     * @return this
+     */
+    public XRandomName setDesensitizationLength(int desensitizationLength) {
+
+        this.desensitizationLength = desensitizationLength;
+        return this;
+    }
+
+    /**
+     * 设置脱敏字
+     *
+     * @param desensitizationName 脱敏字
+     * @return this
+     */
+    public XRandomName setDesensitizationName(String desensitizationName) {
+
+        this.desensitizationName = desensitizationName;
+        return this;
     }
 }

@@ -38,7 +38,7 @@ public class XRandomDate {
      *
      * @return this
      */
-    public static XRandomDate start() {
+    public static XRandomDate init() {
         return new XRandomDate()
                 .setLeft(LocalDateTime.of(1000, 1, 1, 0, 0, 0))
                 .setRight(LocalDateTime.of(9999, 12, 31, 23, 59, 59));

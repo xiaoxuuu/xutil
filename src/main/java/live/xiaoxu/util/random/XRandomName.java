@@ -1,5 +1,7 @@
 package live.xiaoxu.util.random;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * <p>生成随机姓名</p>
  *
@@ -16,7 +18,7 @@ public class XRandomName {
     /**
      * 姓
      */
-    private static final String[] SURNNAME = {"李", "王", "张", "刘", "陈", "杨", "赵", "黄", "周", "吴", "徐", "孙",
+    private static final String[] SURNAME = {"李", "王", "张", "刘", "陈", "杨", "赵", "黄", "周", "吴", "徐", "孙",
             "胡", "朱", "高", "林", "何", "郭", "马", "罗", "梁", "宋", "郑", "谢", "韩", "唐", "冯", "于", "董", "萧",
             "程", "曹", "袁", "邓", "许", "傅", "沈", "曾", "彭", "吕", "苏", "卢", "蒋", "蔡", "贾", "丁", "魏", "薛",
             "叶", "阎", "余", "潘", "杜", "戴", "夏", "钟", "汪", "田", "任", "姜", "范", "方", "石", "姚", "谭", "廖",
@@ -37,7 +39,7 @@ public class XRandomName {
     /**
      * 复姓
      */
-    private static final String[] DOUBLE_SURNNAME = {"欧阳", "上官", "皇甫", "令狐", "诸葛", "司徒", "司马", "申屠",
+    private static final String[] DOUBLE_SURNAME = {"欧阳", "上官", "皇甫", "令狐", "诸葛", "司徒", "司马", "申屠",
             "夏侯", "贺兰", "完颜", "慕容", "尉迟", "长孙"};
 
     /**
@@ -123,27 +125,6 @@ public class XRandomName {
     }
 
     /**
-     * <p>初始化</p>
-     * <p>useSurname：true</p>
-     * <p>useDoubleSurname：true</p>
-     * <p>useName：true</p>
-     * <p>useDoubleName：true</p>
-     * <p>desensitizationLength：0</p>
-     * <p>desensitizationName：某</p>
-     *
-     * @return this
-     */
-    public static XRandomName init() {
-        return new XRandomName()
-                .setUseSurname(true)
-                .setUseDoubleSurname(true)
-                .setUseName(true)
-                .setUseDoubleName(true)
-                .setDesensitizationLength(0)
-                .setDesensitizationName(DEFAULT_DESENSITIZATION_NAME);
-    }
-
-    /**
      * 设置是否使用单字姓
      *
      * @param useSurname 是否使用单字姓
@@ -213,5 +194,80 @@ public class XRandomName {
 
         this.desensitizationName = desensitizationName;
         return this;
+    }
+
+    /**
+     * <p>初始化</p>
+     * <p>useSurname：true</p>
+     * <p>useDoubleSurname：true</p>
+     * <p>useName：true</p>
+     * <p>useDoubleName：true</p>
+     * <p>desensitizationLength：0</p>
+     * <p>desensitizationName：某</p>
+     *
+     * @return this
+     */
+    public static XRandomName init() {
+        return new XRandomName()
+                .setUseSurname(true)
+                .setUseDoubleSurname(true)
+                .setUseName(true)
+                .setUseDoubleName(true)
+                .setDesensitizationLength(0)
+                .setDesensitizationName(DEFAULT_DESENSITIZATION_NAME);
+    }
+
+    /**
+     * 获取一个随机人名
+     *
+     * @return 获取的人名
+     */
+    public String get() {
+
+        ThreadLocalRandom localRandom = ThreadLocalRandom.current();
+
+        if (useSurname && useDoubleSurname) {
+            useSurname = localRandom.nextBoolean();
+            useDoubleSurname = !useSurname;
+        }
+        if (useName && useDoubleName) {
+            useName = localRandom.nextBoolean();
+            useDoubleName = !useName;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (useSurname) {
+            int surnameLength = localRandom.nextInt(SURNAME.length);
+            stringBuilder.append(SURNAME[surnameLength]);
+        }
+
+        if (useDoubleSurname) {
+            int doubleSurnameLength = localRandom.nextInt(DOUBLE_SURNAME.length);
+            stringBuilder.append(DOUBLE_SURNAME[doubleSurnameLength]);
+        }
+
+        if (useName) {
+            if (desensitizationLength != 0) {
+                stringBuilder.append(desensitizationName);
+            } else {
+                int nameLength = localRandom.nextInt(NAME.length);
+                stringBuilder.append(NAME[nameLength]);
+            }
+        }
+
+        if (useDoubleName) {
+            if (desensitizationLength == 0) {
+                int doubleNameLength = localRandom.nextInt(DOUBLE_NAME.length);
+                stringBuilder.append(DOUBLE_NAME[doubleNameLength]);
+            } else if (desensitizationLength == 1) {
+                int nameLength = localRandom.nextInt(NAME.length);
+                stringBuilder.append(desensitizationName);
+                stringBuilder.append(DOUBLE_NAME[nameLength].substring(1));
+            } else if (desensitizationLength > 1) {
+                stringBuilder.append(String.valueOf(desensitizationName).repeat(desensitizationLength));
+            }
+        }
+        return stringBuilder.toString();
     }
 }

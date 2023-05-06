@@ -1,5 +1,7 @@
 package live.xiaoxu.util.random;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -57,9 +59,9 @@ public class XRandomName {
             "伶", "男", "强", "元", "潇", "先", "光", "蕊", "煌", "华", "敏", "菲", "青", "靖", "南", "静", "博", "孜",
             "非", "赟", "楠", "正", "坤", "祥", "彦", "慧", "轩", "浩", "彪", "卫", "彬", "敬", "祯", "杰", "兰", "佳",
             "兴", "兵", "海", "祺", "好", "蕾", "松", "长", "超", "宇", "薇", "文", "辉", "安", "莉", "玉", "越", "斌",
-            "美", "福", "宏", "林", "宗", "香", "龙", "军", "涛", "宜", "依", "宝", "玫", "冬", "微", "妮", "冰", "新",
+            "美", "福", "宏", "林", "宗", "香", "龙", "军", "涛", "宜", "依", "翰", "玫", "冬", "微", "妮", "冰", "新",
             "玲", "莲", "涵", "家", "德", "莹", "达", "秀", "菁", "珂", "心", "毅", "淇", "俊", "珊", "凌", "富", "珍",
-            "巍", "柏", "音", "金", "淑", "翔", "燕", "志", "诗", "萌", "凡", "臣", "凤", "希", "可", "堂", "明", "翰"};
+            "巍", "柏", "音", "金", "淑", "翔", "燕", "志", "诗", "萌", "凡", "臣", "凤", "希", "可", "堂", "明"};
 
     /**
      * 名，双字
@@ -226,48 +228,42 @@ public class XRandomName {
 
         ThreadLocalRandom localRandom = ThreadLocalRandom.current();
 
-        if (useSurname && useDoubleSurname) {
-            useSurname = localRandom.nextBoolean();
-            useDoubleSurname = !useSurname;
-        }
-        if (useName && useDoubleName) {
-            useName = localRandom.nextBoolean();
-            useDoubleName = !useName;
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
+        List<String> surnameList = new ArrayList<>();
         if (useSurname) {
-            int surnameLength = localRandom.nextInt(SURNAME.length);
-            stringBuilder.append(SURNAME[surnameLength]);
+            surnameList.addAll(List.of(SURNAME));
         }
-
         if (useDoubleSurname) {
-            int doubleSurnameLength = localRandom.nextInt(DOUBLE_SURNAME.length);
-            stringBuilder.append(DOUBLE_SURNAME[doubleSurnameLength]);
+            surnameList.addAll(List.of(DOUBLE_SURNAME));
         }
 
+        List<String> nameList = new ArrayList<>();
         if (useName) {
-            if (desensitizationLength != 0) {
-                stringBuilder.append(desensitizationName);
-            } else {
-                int nameLength = localRandom.nextInt(NAME.length);
-                stringBuilder.append(NAME[nameLength]);
-            }
+            nameList.addAll(List.of(NAME));
+        }
+        if (useDoubleName) {
+            nameList.addAll(List.of(DOUBLE_NAME));
         }
 
-        if (useDoubleName) {
-            if (desensitizationLength == 0) {
-                int doubleNameLength = localRandom.nextInt(DOUBLE_NAME.length);
-                stringBuilder.append(DOUBLE_NAME[doubleNameLength]);
-            } else if (desensitizationLength == 1) {
-                int nameLength = localRandom.nextInt(NAME.length);
-                stringBuilder.append(desensitizationName);
-                stringBuilder.append(DOUBLE_NAME[nameLength].substring(1));
-            } else if (desensitizationLength > 1) {
-                stringBuilder.append(String.valueOf(desensitizationName).repeat(desensitizationLength));
-            }
+        String finalSurname = "";
+        String finalName = "";
+
+        if (useSurname || useDoubleSurname) {
+            int surnameLength = localRandom.nextInt(surnameList.size());
+            finalSurname = surnameList.get(surnameLength);
         }
-        return stringBuilder.toString();
+
+        if (useName || useDoubleName) {
+            int nameLength = localRandom.nextInt(nameList.size());
+            finalName = nameList.get(nameLength);
+        }
+
+        if (desensitizationLength != 0) {
+            int index = Math.min(desensitizationLength, finalName.length());
+            String last = finalName.substring(index);
+            String desensitizationRepeat = String.valueOf(desensitizationName).repeat(index);
+            finalName = desensitizationRepeat + last;
+        }
+
+        return finalSurname + finalName;
     }
 }

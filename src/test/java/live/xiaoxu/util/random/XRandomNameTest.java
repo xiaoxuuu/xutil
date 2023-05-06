@@ -7,6 +7,6 @@ class XRandomNameTest {
     @Test
     void get() {
 
-        System.out.println(XRandomName.init().setUseSurname(false).setDesensitizationLength(1).get());
+        XRandomName.init().setUseSurname(false).setDesensitizationLength(1).getBatch(10).forEach(System.out::println);
     }
 }

@@ -226,6 +226,17 @@ public class XRandomName {
      */
     public String get() {
 
+        return getBatch(1).get(0);
+    }
+
+    /**
+     * 获取多个随机人名
+     *
+     * @param i 需获取的人名个数
+     * @return 获取的人名集合
+     */
+    public List<String> getBatch(int i) {
+
         ThreadLocalRandom localRandom = ThreadLocalRandom.current();
 
         List<String> surnameList = new ArrayList<>();
@@ -244,26 +255,30 @@ public class XRandomName {
             nameList.addAll(List.of(DOUBLE_NAME));
         }
 
-        String finalSurname = "";
-        String finalName = "";
+        List<String> returnNameList = new ArrayList<>();
+        for (int j = 0; j < i; j++) {
+            String finalSurname = "";
+            String finalName = "";
 
-        if (useSurname || useDoubleSurname) {
-            int surnameLength = localRandom.nextInt(surnameList.size());
-            finalSurname = surnameList.get(surnameLength);
+            if (useSurname || useDoubleSurname) {
+                int surnameLength = localRandom.nextInt(surnameList.size());
+                finalSurname = surnameList.get(surnameLength);
+            }
+
+            if (useName || useDoubleName) {
+                int nameLength = localRandom.nextInt(nameList.size());
+                finalName = nameList.get(nameLength);
+            }
+
+            if (desensitizationLength != 0) {
+                int index = Math.min(desensitizationLength, finalName.length());
+                String last = finalName.substring(index);
+                String desensitizationRepeat = String.valueOf(desensitizationName).repeat(index);
+                finalName = desensitizationRepeat + last;
+            }
+            returnNameList.add(finalSurname + finalName);
         }
 
-        if (useName || useDoubleName) {
-            int nameLength = localRandom.nextInt(nameList.size());
-            finalName = nameList.get(nameLength);
-        }
-
-        if (desensitizationLength != 0) {
-            int index = Math.min(desensitizationLength, finalName.length());
-            String last = finalName.substring(index);
-            String desensitizationRepeat = String.valueOf(desensitizationName).repeat(index);
-            finalName = desensitizationRepeat + last;
-        }
-
-        return finalSurname + finalName;
+        return returnNameList;
     }
 }

@@ -89,15 +89,20 @@ public class XMapUtils {
     }
 
     /**
-     * 将两个 map 集合数据相加 TODO 报错
+     * <p>将两个 map 的集合数据相加</p>
+     * <p>使用示例：</p>
+     * <p>{@code Map<String, Collection<String>> map1 = Map.of("1", Set.of("1", "2"), "2", List.of("1"));}</p>
+     * <p>{@code Map<String, Collection<String>> map2 = Map.of("1", List.of("3"), "5", List.of("1"));}</p>
+     * <p>{@code Map<String, Collection<String>> plus = plus(map1, map2);}</p>
+     * <p>{@code plus ===>>> {1=[1, 2, 3], 5=[1], 2=[1]}}</p>
      *
      * @param map1 第一个 map
      * @param map2 第二个 map
      * @param <K>  map 的 key
      * @param <V>  map 的 value
-     * @return 想加的结果
+     * @return 相加的结果
      */
-    public static <K, V> Map<K, Collection<V>> plusMap(Map<K, Collection<V>> map1, Map<K, Collection<V>> map2) {
+    public static <K, V> Map<K, Collection<V>> plus(Map<K, Collection<V>> map1, Map<K, Collection<V>> map2) {
 
         Map<K, Collection<V>> finalMap = new HashMap<>(map1);
         map2.forEach((k, v) -> {

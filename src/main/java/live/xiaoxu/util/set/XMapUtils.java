@@ -89,32 +89,40 @@ public class XMapUtils {
     }
 
     /**
-     * <p>将两个 map 的集合数据相加</p>
+     * <p>将两个 map 的集合数据相加，重复的数据会被去重</p>
      * <p>使用示例：</p>
-     * <p>{@code Map<String, Collection<String>> map1 = Map.of("1", Set.of("1", "2"), "2", List.of("1"));}</p>
-     * <p>{@code Map<String, Collection<String>> map2 = Map.of("1", List.of("3"), "5", List.of("1"));}</p>
-     * <p>{@code Map<String, Collection<String>> plus = plus(map1, map2);}</p>
-     * <p>{@code plus ===>>> {1=[1, 2, 3], 5=[1], 2=[1]}}</p>
+     * <p>{@code Map<String, Collection<String>> map1 = Map.of("1", Set.of("1"), "2", Set.of("2"));}</p>
+     * <p>{@code Map<String, Collection<String>> map2 = Map.of("1", List.of("2"), "5", List.of("5"));}</p>
+     * <p>{@code Map<String, Collection<String>> map3 = Map.of("1", List.of("1", "2"));}</p>
+     * <p>{@code Map<String, Collection<String>> plus = plus(map1, map2, map3);}</p>
+     * <p>{@code plus ===>>> {1=[1, 2], 5=[5], 2=[2]}}</p>
      *
-     * @param map1 第一个 map
-     * @param map2 第二个 map
-     * @param <K>  map 的 key
-     * @param <V>  map 的 value
+     * @param map 待相加 map
+     * @param <K> map 的 key
+     * @param <V> map 的 value
      * @return 相加的结果
      */
-    public static <K, V> Map<K, Collection<V>> plus(Map<K, Collection<V>> map1, Map<K, Collection<V>> map2) {
+    @SafeVarargs
+    public static <K, V> Map<K, Collection<V>> plus(Map<K, Collection<V>>... map) {
 
-        Map<K, Collection<V>> finalMap = new HashMap<>(map1);
-        map2.forEach((k, v) -> {
-            if (!finalMap.containsKey(k)) {
-                finalMap.put(k, v);
-            } else {
-                Collection<V> collection = finalMap.get(k);
-                Set<V> setFinal = new HashSet<>(collection);
-                setFinal.addAll(v);
-                finalMap.put(k, setFinal);
-            }
-        });
+        long mapSizeCount = Arrays.stream(map)
+                .map(Map::keySet)
+                .flatMap(Collection::stream)
+                .distinct().count();
+
+        Map<K, Collection<V>> finalMap = new HashMap<>((int) mapSizeCount);
+        for (Map<K, Collection<V>> kCollectionMap : map) {
+            kCollectionMap.forEach((k, v) -> {
+                if (!finalMap.containsKey(k)) {
+                    finalMap.put(k, v);
+                } else {
+                    Collection<V> collection = finalMap.get(k);
+                    Set<V> setFinal = new HashSet<>(collection);
+                    setFinal.addAll(v);
+                    finalMap.put(k, setFinal);
+                }
+            });
+        }
         return finalMap;
     }
 }

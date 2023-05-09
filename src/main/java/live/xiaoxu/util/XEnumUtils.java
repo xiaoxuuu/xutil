@@ -18,6 +18,13 @@ import java.util.stream.Collectors;
 public final class XEnumUtils {
 
     /**
+     * 禁止实例化
+     */
+    private XEnumUtils() {
+        throw new IllegalAccessError("XEnumUtils.class");
+    }
+
+    /**
      * <p>查找枚举</p>
      * <p>会根据枚举的 name、code 以及枚举的名称进行搜寻，满足上述任意条件即会认为判断成功</p>
      * <p>会返回找到的第一个枚举</p>

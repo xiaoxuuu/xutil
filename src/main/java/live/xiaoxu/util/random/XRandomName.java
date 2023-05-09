@@ -121,7 +121,7 @@ public class XRandomName {
     private String desensitizationName;
 
     /**
-     * 禁止无参实例化
+     * 禁止直接无参实例化
      */
     private XRandomName() {
     }

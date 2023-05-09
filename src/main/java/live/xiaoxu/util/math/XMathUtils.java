@@ -27,6 +27,7 @@ public class XMathUtils {
      * 禁止实例化
      */
     private XMathUtils() {
+        throw new IllegalAccessError("XMathUtils.class");
     }
 
     /**

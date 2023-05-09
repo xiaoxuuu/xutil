@@ -18,6 +18,7 @@ public class XMathFormulaUtils {
      * 禁止实例化
      */
     private XMathFormulaUtils() {
+        throw new IllegalAccessError("XMathFormulaUtils.class");
     }
 
     /**

@@ -16,6 +16,7 @@ public class XStringUtils {
      * 禁止实例化
      */
     private XStringUtils() {
+        throw new IllegalAccessError("XStringUtils.class");
     }
 
     /**

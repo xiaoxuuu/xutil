@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO <p>日期美化工具类</p>
+ * <p>日期美化工具类</p>
  *
  * @author 小徐
  * @since 2023/1/3 17:32
@@ -33,7 +33,11 @@ public class XPrettifyDateTime {
      */
     private List<TimeUnit> removeUnitList;
 
+    /**
+     * 禁止实例化
+     */
     private XPrettifyDateTime() {
+        throw new IllegalAccessError("XEnumUtils.class");
     }
 
     /**
@@ -53,7 +57,7 @@ public class XPrettifyDateTime {
      * @param ns 纳秒
      * @return this
      */
-    public static XPrettifyDateTime createByNano(Long ns) {
+    public static XPrettifyDateTime initWithByNano(Long ns) {
 
         return new XPrettifyDateTime(ns);
     }
@@ -64,7 +68,7 @@ public class XPrettifyDateTime {
      * @param ms 微秒
      * @return this
      */
-    public static XPrettifyDateTime createByMicrosecond(Long ms) {
+    public static XPrettifyDateTime initWithMicrosecond(Long ms) {
 
         return new XPrettifyDateTime(ms * 1000);
     }
@@ -75,7 +79,7 @@ public class XPrettifyDateTime {
      * @param ms 秒
      * @return this
      */
-    public static XPrettifyDateTime createByMillisecond(Long ms) {
+    public static XPrettifyDateTime initWithMillisecond(Long ms) {
 
         return new XPrettifyDateTime(ms * 1000 * 1000);
     }
@@ -86,7 +90,7 @@ public class XPrettifyDateTime {
      * @param s 秒
      * @return this
      */
-    public static XPrettifyDateTime createBySecond(Long s) {
+    public static XPrettifyDateTime initWithSecond(Long s) {
 
         return new XPrettifyDateTime(s * 1000 * 1000 * 1000);
     }

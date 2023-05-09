@@ -10,6 +10,13 @@ import java.io.UnsupportedEncodingException;
  */
 public final class XChineseUtils {
 
+    /**
+     * 禁止实例化
+     */
+    private XChineseUtils() {
+        throw new IllegalAccessError("XChineseUtils.class");
+    }
+
     private final static int[] LI_SEC_POS_VALUE = {1601, 1637, 1833, 2078, 2274,
             2302, 2433, 2594, 2787, 3106, 3212, 3472, 3635, 3722, 3730, 3858,
             4027, 4086, 4390, 4558, 4684, 4925, 5249, 5590};

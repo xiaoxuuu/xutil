@@ -21,6 +21,13 @@ public class XDateUtils {
     private static final ZoneId ZONE_ID = ZoneId.systemDefault();
 
     /**
+     * 禁止实例化
+     */
+    private XDateUtils() {
+        throw new IllegalAccessError("XDateUtils.class");
+    }
+
+    /**
      * {@link java.util.Date Date} 转 {@link java.time.LocalDateTime LocalDateTime}
      *
      * @param date 日期

@@ -21,6 +21,7 @@ public final class XBeanUtils {
      * 禁止实例化
      */
     private XBeanUtils() {
+        throw new IllegalAccessError("XBeanUtils.class");
     }
 
     /**

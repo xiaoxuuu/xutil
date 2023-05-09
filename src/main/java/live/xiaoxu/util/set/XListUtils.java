@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 
 public class XListUtils {
 
+    private XListUtils() {
+        throw new IllegalAccessError("XListUtils.class");
+    }
+
     /**
      * <p>集合判空，null 或集合 size 为 0 都返回 true</p>
      *

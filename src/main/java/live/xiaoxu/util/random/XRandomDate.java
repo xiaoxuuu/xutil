@@ -26,7 +26,7 @@ public class XRandomDate {
     private LocalDateTime right;
 
     /**
-     * 禁止无参实例化
+     * 禁止直接无参实例化
      */
     private XRandomDate() {
     }

@@ -20,11 +20,12 @@ public class XMathChain {
      * 禁止空参构造
      */
     private XMathChain() {
+        throw new IllegalAccessError("XMathChain.class");
     }
 
-    private XMathChain(Object val) {
+    public XMathChain(Object val) {
 
-        value = XMathUtils.toBigDecimal(val);
+        this.value = XMathUtils.toBigDecimal(val);
     }
 
     /**
@@ -87,7 +88,6 @@ public class XMathChain {
         this.value = XMathUtils.divide(value, v2);
         return this;
     }
-
 
     /**
      * 次方，内部调用{@link XMathUtils#power(Object, int)}

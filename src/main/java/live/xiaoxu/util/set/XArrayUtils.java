@@ -3,12 +3,16 @@ package live.xiaoxu.util.set;
 import java.util.Objects;
 
 /**
- * <p>数组工具类</p>
+ * <p>数组工具类，不支持基本类型数组</p>
  *
  * @author 小徐
  * @since 2023/1/3 15:25
  */
 public class XArrayUtils {
+
+    private XArrayUtils() {
+        throw new IllegalAccessError("XArrayUtils.class");
+    }
 
     /**
      * 是否为空

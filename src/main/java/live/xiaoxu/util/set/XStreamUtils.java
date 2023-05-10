@@ -41,6 +41,26 @@ public class XStreamUtils {
     }
 
     /**
+     * <p>取出集合中的一部分属性，并将其作为 Key 转为 map</p>
+     * <p>将继承自{@link java.util.Collection Collection}的集合经过一个操作转换为{@link java.util.Map Map}</p>
+     * <p>源集合为 null 或者操作为 null 均默认返回{@link java.util.HashMap HashMap}</p>
+     * <p>例如：{@code Map<String, User> userMap = XStreamUtils.getMap(userList, User::getUserName);}</p>
+     *
+     * @param collection 源集合
+     * @param keyMapper  映射关系
+     * @param <T>        源集合类型
+     * @param <K>        map K 类型
+     * @return 取出的结果
+     */
+    public static <T, K> Map<? extends K, T> getMap(Collection<T> collection, Function<? super T, ? extends K> keyMapper) {
+
+        if (Objects.isNull(collection) || Objects.isNull(keyMapper)) {
+            return new HashMap<>(0);
+        }
+        return collection.stream().collect(Collectors.toMap(keyMapper, a -> a));
+    }
+
+    /**
      * <p>将集合进行分组</p>
      * <p>将继承自{@link java.util.Collection Collection}的集合经过一个分组操作转换为{@link java.util.Map Map}</p>
      * <p>源集合为 null 或者操作为 null 均默认返回{@link java.util.HashMap HashMap}</p>

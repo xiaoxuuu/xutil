@@ -43,10 +43,10 @@ public class XListUtils {
      */
     public static <T> List<List<T>> subList(List<T> list, Integer index) {
 
-        List<List<T>> lists = new ArrayList<>();
         if (0 == index) {
             return new ArrayList<>();
         }
+        List<List<T>> lists = new ArrayList<>();
         if (list.size() <= index || index < 0) {
             lists.add(list);
             return lists;
@@ -65,6 +65,13 @@ public class XListUtils {
         return lists;
     }
 
+    /**
+     * TODO
+     *
+     * @param listList
+     * @param <T>
+     * @return
+     */
     public static <T> List<List<T>> transpose(List<List<T>> listList) {
 
         List<List<T>> newListList = new ArrayList<>();
@@ -85,12 +92,20 @@ public class XListUtils {
         return newListList;
     }
 
+    /**
+     * TODO
+     *
+     * @param t
+     * @param num
+     * @param <T>
+     * @return
+     */
     public static <T> Collection<T> addMultiple(T t, int num) {
 
-        List<T> list = new ArrayList<>();
         if (num < 0) {
-            return list;
+            return new ArrayList<>();
         }
+        List<T> list = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {
             list.add(t);
         }
@@ -198,10 +213,10 @@ public class XListUtils {
      */
     public static <T> List<T> subList(List<T> list, int index, int length) {
 
-        List<T> returnList = new ArrayList<>();
         if (list.size() == 0 || index < 0 || length < 0) {
-            return returnList;
+            return new ArrayList<>();
         }
+        List<T> returnList = new ArrayList<>(length);
         if (list.size() < index || list.size() < length) {
             return returnList;
         }
@@ -233,6 +248,7 @@ public class XListUtils {
         return result;
     }
 
+    @SafeVarargs
     public static <T> List<T> concat(List<T>... lists) {
 
         List<T> list = new ArrayList<>();
@@ -285,7 +301,7 @@ public class XListUtils {
     }
 
     /**
-     * <p>将一个集合按照某种规则重新排序</p>
+     * <p>将一个集合按照某种规则重新排序 TODO 如果 ruleList 数据不完整可能导致数据丢失</p>
      * <p>例如：User(int id)</p>
      * <p>{@code List<User> userList = Arrays.asList(new User(2), new User(3), new User(1));}</p>
      * <p>{@code List<Integer> idList = Arrays.asList(3, 2, 1);}</p>
@@ -301,7 +317,7 @@ public class XListUtils {
      */
     public static <T, K> List<T> resort(List<T> source, List<K> sortRuleList, Function<? super T, ? extends K> keyMapper) {
 
-        List<T> result = new ArrayList<>();
+        List<T> result = new ArrayList<>(source.size());
         Map<? extends K, T> collect = source.stream().collect(Collectors.toMap(keyMapper, a -> a));
         for (K k : sortRuleList) {
             result.add(collect.get(k));

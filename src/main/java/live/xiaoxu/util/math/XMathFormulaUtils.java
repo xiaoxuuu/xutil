@@ -77,14 +77,15 @@ public class XMathFormulaUtils {
      */
     private static List<String> transferInfillToSuffix(String mathStr) {
 
-        // 标记输出结果
-        List<String> result = new ArrayList<>();
         // 1.初始化一个运算符栈。
         Stack<String> stack = new Stack<>();
         if (mathStr == null || mathStr.length() == 0) {
             return null;
         }
         String[] arr = mathStr.split(" ");
+
+        // 标记输出结果
+        List<String> result = new ArrayList<>(arr.length);
         for (String s : arr) {
             // 2.从算数表达式输入的字符串中依次从左向右每次读取一个字符。
             // 3.如果当前字符是操作数，则直接填写到后缀表达式。

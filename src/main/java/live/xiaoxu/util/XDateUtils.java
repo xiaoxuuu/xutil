@@ -179,7 +179,7 @@ public class XDateUtils {
         if (someYear < 0) {
             return new ArrayList<>();
         }
-        List<Integer> yearList = new ArrayList<>();
+        List<Integer> yearList = new ArrayList<>(someYear + 1);
         for (int i = 0; i <= someYear; i++) {
             yearList.add(targetYear - i);
         }

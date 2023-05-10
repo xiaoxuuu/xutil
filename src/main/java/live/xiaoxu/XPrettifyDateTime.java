@@ -167,7 +167,7 @@ public class XPrettifyDateTime {
         long microsecond = (time - day * dd - hour * hh - minute * mi - second * sec - millisecond * millis) / nanos;
         long nanosecond = time - day * dd - hour * hh - minute * mi - second * sec - millisecond * millis - microsecond * nanos;
 
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>(7);
         appendUnit(TimeUnit.DAY, day, list);
         appendUnit(TimeUnit.HOUR, hour, list);
         appendUnit(TimeUnit.MINUTE, minute, list);

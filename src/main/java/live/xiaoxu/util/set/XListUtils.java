@@ -4,6 +4,13 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * <p>集合工具类</p>
+ * <p>该工具类下，带返回参数的结果均为重新构建的数据</p>
+ *
+ * @author 小徐
+ * @since 2023/5/11 10:15
+ */
 public class XListUtils {
 
     private XListUtils() {
@@ -32,25 +39,25 @@ public class XListUtils {
 
     /**
      * <p>将传入的 List 按照给定的 index 拆分成 2 个子 List</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5], index = 3 ===>>> [[1, 2, 3],[4, 5]]}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5]  , index = 2 ===>>> [[1, 2], [3, 4, 5]]}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5]  , index <= 0 ===>>> [[1, 2, 3, 4, 5]]}</p>
+     * <p>例：{@code List<Integer> list = List.of(1, 2, 3, 4, 5);}</p>
+     * <p>例：{@code subList(list, -1) ==> Exception}</p>
+     * <p>例：{@code subList(list, 0) ==> [[], [1, 2, 3, 4, 5]]}}</p>
+     * <p>例：{@code subList(list, 1) ==> [[1], [2, 3, 4, 5]]}</p>
+     * <p>例：{@code subList(list, 2) ==> [[1, 2], [3, 4, 5]]}</p>
+     * <p>例：{@code subList(list, 3) ==> [[1, 2, 3],[4, 5]]}</p>
+     * <p>例：{@code subList(list, 6) ==> [[1, 2, 3, 4, 5]]}</p>
      *
      * @param list  待拆分集合
-     * @param index 拆分为几个集合
+     * @param index 拆分索引位置（包含）
      * @param <T>   类型
      * @return 拆分结果
      */
-    public static <T> List<List<T>> subList(List<T> list, Integer index) {
+    public static <T> List<List<T>> divideList(List<T> list, Integer index) {
 
-        if (0 == index) {
-            return new ArrayList<>();
+        if (index < 0) {
+            throw new IllegalArgumentException("拆分索引不能小于 0");
         }
         List<List<T>> lists = new ArrayList<>();
-        if (list.size() <= index || index < 0) {
-            lists.add(list);
-            return lists;
-        }
         List<T> listLeft = new ArrayList<>();
         List<T> listRight = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {

@@ -73,6 +73,38 @@ public class XListUtils {
     }
 
     /**
+     * 取出集合指定位置数据
+     * <p>例：{@code List<Integer> list = List.of(1, 2, 3, 4, 5);}</p>
+     * <p>例：{@code subList(list, 0, 1) ==> [1]}</p>
+     * <p>例：{@code subList(list, 0, 2) ==> [1, 2]}</p>
+     * <p>例：{@code subList(list, 2, 2) ==> [3, 4]}</p>
+     *
+     * @param list   原集合
+     * @param index  指定位置（包含）
+     * @param length 取出个数
+     * @param <T>    泛型
+     * @return 结果
+     */
+    public static <T> List<T> subList(List<T> list, int index, int length) {
+
+        if (index < 0) {
+            throw new IllegalArgumentException("拆分索引需要大于 0");
+        }
+        if (length <= 0) {
+            throw new IllegalArgumentException("目标集合长度需要大于 0");
+        }
+        if (list.size() == 0) {
+            return new ArrayList<>();
+        }
+
+        List<T> returnList = new ArrayList<>(length);
+        for (int i = 0; i < length; i++) {
+            returnList.add(list.get(index + i));
+        }
+        return returnList;
+    }
+
+    /**
      * TODO
      *
      * @param listList
@@ -207,31 +239,6 @@ public class XListUtils {
     public static <T> List<T> create(T[] array) {
 
         return new ArrayList<>(Arrays.asList(array));
-    }
-
-    /**
-     * 取出集合指定位置数据
-     *
-     * @param list   原集合
-     * @param index  指定位置
-     * @param length 取出个数
-     * @param <T>    泛型
-     * @return 结果
-     */
-    public static <T> List<T> subList(List<T> list, int index, int length) {
-
-        if (list.size() == 0 || index < 0 || length < 0) {
-            return new ArrayList<>();
-        }
-        List<T> returnList = new ArrayList<>(length);
-        if (list.size() < index || list.size() < length) {
-            return returnList;
-        }
-
-        for (int i = 0; i < length; i++) {
-            returnList.add(list.get(index + i));
-        }
-        return returnList;
     }
 
     /**

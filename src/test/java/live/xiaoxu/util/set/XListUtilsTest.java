@@ -58,6 +58,21 @@ class XListUtilsTest {
 
     @Test
     void subList() {
+
+        List<Integer> list = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        List<Integer> list1 = XListUtils.subList(list, 0, 1);
+        Assertions.assertEquals(1, list1.get(0));
+
+        List<Integer> list2 = XListUtils.subList(list, 1, 1);
+        Assertions.assertEquals(2, list2.get(0));
+
+        List<Integer> list3 = XListUtils.subList(list, 2, 1);
+        Assertions.assertEquals(3, list3.get(0));
+
+        List<Integer> list4 = XListUtils.subList(list, 2, 2);
+        Assertions.assertEquals(3, list4.get(0));
+        Assertions.assertEquals(4, list4.get(1));
     }
 
     @Test

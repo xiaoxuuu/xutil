@@ -77,6 +77,22 @@ class XListUtilsTest {
 
     @Test
     void transpose() {
+
+        List<Integer> listA = List.of(1, 2, 3);
+        List<Integer> listB = List.of(4, 5, 6);
+        List<Integer> listC = List.of(7, 8, 9);
+        List<List<Integer>> lists = List.of(listA, listB, listC);
+        List<List<Integer>> transpose = XListUtils.transpose(lists);
+
+        Assertions.assertEquals(1, transpose.get(0).get(0));
+        Assertions.assertEquals(4, transpose.get(0).get(1));
+        Assertions.assertEquals(7, transpose.get(0).get(2));
+        Assertions.assertEquals(2, transpose.get(1).get(0));
+        Assertions.assertEquals(5, transpose.get(1).get(1));
+        Assertions.assertEquals(8, transpose.get(1).get(2));
+        Assertions.assertEquals(3, transpose.get(2).get(0));
+        Assertions.assertEquals(6, transpose.get(2).get(1));
+        Assertions.assertEquals(9, transpose.get(2).get(2));
     }
 
     @Test

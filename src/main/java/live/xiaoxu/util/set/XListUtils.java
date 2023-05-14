@@ -105,11 +105,20 @@ public class XListUtils {
     }
 
     /**
-     * TODO
+     * <p>将嵌套集合数据以左上至右下的对角线进行翻转</p>
+     * <p>例：</p>
+     * <p>{@code List<Integer> listA = List.of(1, 2, 3);}</p>
+     * <p>{@code List<Integer> listB = List.of(4, 5, 6);}</p>
+     * <p>{@code List<Integer> listC = List.of(7, 8, 9);}</p>
+     * <p>{@code List<List<Integer>> lists = List.of(listA, listB, listC);}</p>
+     * <p>{@code List<List<Integer>> transpose = XListUtils.transpose(lists);}</p>
+     * <p>{@code transpose.get(0) ==> [1, 4, 7]}</p>
+     * <p>{@code transpose.get(1) ==> [2, 5, 8]}</p>
+     * <p>{@code transpose.get(2) ==> [3, 6, 9]}</p>
      *
-     * @param listList
-     * @param <T>
-     * @return
+     * @param listList 原集合
+     * @param <T>      类型
+     * @return 翻转后的集合
      */
     public static <T> List<List<T>> transpose(List<List<T>> listList) {
 

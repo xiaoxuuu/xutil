@@ -96,7 +96,13 @@ class XListUtilsTest {
     }
 
     @Test
-    void addMultiple() {
+    void repet() {
+
+        List<Integer> list = XListUtils.repet(1, 3);
+        Assertions.assertEquals(3, list.size());
+        Assertions.assertEquals(1, list.get(0));
+        Assertions.assertEquals(1, list.get(1));
+        Assertions.assertEquals(1, list.get(2));
     }
 
     @Test

@@ -141,14 +141,14 @@ public class XListUtils {
     }
 
     /**
-     * TODO
+     * <p>将一份数据进行多次放置进集合中（浅拷贝）</p>
      *
-     * @param t
-     * @param num
-     * @param <T>
-     * @return
+     * @param t   源数据
+     * @param num 重复次数
+     * @param <T> 类型
+     * @return 集合
      */
-    public static <T> Collection<T> addMultiple(T t, int num) {
+    public static <T> List<T> repet(T t, int num) {
 
         if (num < 0) {
             return new ArrayList<>();

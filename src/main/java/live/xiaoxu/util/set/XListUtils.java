@@ -217,26 +217,6 @@ public class XListUtils {
         return lists.get(current - 1);
     }
 
-
-    public static <T> boolean match(Collection<T> left, Collection<T> right) {
-
-        List<T> leftList = new LinkedList<>(left);
-        List<T> rightList = new LinkedList<>(right);
-        if (leftList.size() != rightList.size()) {
-            return false;
-        }
-        Iterator<T> leftIterator = leftList.iterator();
-        while (leftIterator.hasNext()) {
-            T next = leftIterator.next();
-            if (!rightList.contains(next)) {
-                return false;
-            }
-            leftIterator.remove();
-            rightList.remove(next);
-        }
-        return 0 == rightList.size();
-    }
-
     /**
      * 数组转集合
      *

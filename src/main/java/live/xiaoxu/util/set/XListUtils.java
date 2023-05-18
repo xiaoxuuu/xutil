@@ -163,11 +163,11 @@ public class XListUtils {
     /**
      * <p>将传入的 List 按照给定的 size 拆分成多个子 List</p>
      * <p>例如：{@code list = [], per = ? ===>>> []}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5], per <= 0 ===>>> [[1, 2, 3, 4, 5]]}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 1  ===>>> [[1], [2], [3], [4], [5]]}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 2  ===>>> [[1, 2], [3, 4], [5]]}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 3  ===>>> [[1, 2, 3],[4, 5]]}</p>
-     * <p>例如：{@code list = [1, 2, 3, 4, 5], per >= 5  ===>>> [[1, 2, 3, 4, 5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per <= 0 ==> Exception}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 1  ==> [[1], [2], [3], [4], [5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 2  ==> [[1, 2], [3, 4], [5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per = 3  ==> [[1, 2, 3],[4, 5]]}</p>
+     * <p>例如：{@code list = [1, 2, 3, 4, 5], per >= 5  ==> [[1, 2, 3, 4, 5]]}</p>
      *
      * @param list 待分割数据
      * @param per  每个集合大小
@@ -181,8 +181,7 @@ public class XListUtils {
             return returnList;
         }
         if (per <= 0) {
-            returnList.add(list);
-            return returnList;
+            throw new IllegalArgumentException("拆分索引不能小于 0");
         }
         int count = list.size() / per;
         int yu = list.size() % per;

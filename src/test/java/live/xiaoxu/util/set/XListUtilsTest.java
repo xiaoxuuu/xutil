@@ -107,6 +107,29 @@ class XListUtilsTest {
 
     @Test
     void splitList() {
+
+        List<Integer> list = List.of(1, 2, 3, 4, 5, 6);
+
+        List<List<Integer>> lists1 = XListUtils.splitList(list, 1);
+        Assertions.assertEquals(6, lists1.size());
+
+        List<List<Integer>> lists2 = XListUtils.splitList(list, 2);
+        Assertions.assertEquals(3, lists2.size());
+
+        List<List<Integer>> lists3 = XListUtils.splitList(list, 3);
+        Assertions.assertEquals(2, lists3.size());
+
+        List<List<Integer>> lists4 = XListUtils.splitList(list, 4);
+        Assertions.assertEquals(2, lists4.size());
+
+        List<List<Integer>> lists5 = XListUtils.splitList(list, 5);
+        Assertions.assertEquals(2, lists5.size());
+
+        List<List<Integer>> lists6 = XListUtils.splitList(list, 6);
+        Assertions.assertEquals(1, lists6.size());
+
+        List<List<Integer>> lists7 = XListUtils.splitList(list, 7);
+        Assertions.assertEquals(1, lists7.size());
     }
 
     @Test

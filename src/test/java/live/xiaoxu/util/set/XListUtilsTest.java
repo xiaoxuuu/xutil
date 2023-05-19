@@ -98,7 +98,7 @@ class XListUtilsTest {
     @Test
     void repet() {
 
-        List<Integer> list = XListUtils.repet(1, 3);
+        List<Integer> list = XListUtils.repeat(1, 3);
         Assertions.assertEquals(3, list.size());
         Assertions.assertEquals(1, list.get(0));
         Assertions.assertEquals(1, list.get(1));

@@ -149,7 +149,7 @@ public class XListUtils {
      * @param <T> 类型
      * @return 集合
      */
-    public static <T> List<T> repet(T t, int num) {
+    public static <T> List<T> repeat(T t, int num) {
 
         if (num < 0) {
             return new ArrayList<>();

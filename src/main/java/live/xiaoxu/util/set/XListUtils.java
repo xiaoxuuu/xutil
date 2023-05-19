@@ -152,7 +152,7 @@ public class XListUtils {
     public static <T> List<T> repeat(T t, int num) {
 
         if (num < 0) {
-            return new ArrayList<>();
+            throw new IllegalArgumentException("重复次数不能小于 0");
         }
         List<T> list = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {
@@ -172,7 +172,10 @@ public class XListUtils {
     public static <T> List<T> repeat(Supplier<T> supplier, int num) {
 
         if (num < 0) {
-            return new ArrayList<>();
+            throw new IllegalArgumentException("重复次数不能小于 0");
+        }
+        if (Objects.isNull(supplier)) {
+            throw new NullPointerException("Supplier 不能为 NULL");
         }
         List<T> list = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {

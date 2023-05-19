@@ -103,6 +103,14 @@ class XListUtilsTest {
         Assertions.assertEquals(1, list.get(0));
         Assertions.assertEquals(1, list.get(1));
         Assertions.assertEquals(1, list.get(2));
+
+        List<StringBuilder> repeatStringBuilder = XListUtils.repeat(StringBuilder::new, 5);
+        List<String> repetString = XListUtils.repeat(String::new, 3);
+        Assertions.assertEquals(5, repeatStringBuilder.size());
+        Assertions.assertEquals(3, repetString.size());
+        Assertions.assertEquals("", repetString.get(0));
+        Assertions.assertEquals("", repetString.get(1));
+        Assertions.assertEquals("", repetString.get(2));
     }
 
     @Test

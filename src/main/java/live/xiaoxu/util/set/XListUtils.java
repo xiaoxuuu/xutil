@@ -2,6 +2,7 @@ package live.xiaoxu.util.set;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -156,6 +157,26 @@ public class XListUtils {
         List<T> list = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {
             list.add(t);
+        }
+        return list;
+    }
+
+    /**
+     * <p>将一份数据进行多次放置进集合中（深拷贝）</p>
+     *
+     * @param supplier 源数据
+     * @param num      重复次数
+     * @param <T>      类型
+     * @return 集合
+     */
+    public static <T> List<T> repeat(Supplier<T> supplier, int num) {
+
+        if (num < 0) {
+            return new ArrayList<>();
+        }
+        List<T> list = new ArrayList<>(num);
+        for (int i = 0; i < num; i++) {
+            list.add(supplier.get());
         }
         return list;
     }

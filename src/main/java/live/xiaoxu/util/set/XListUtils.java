@@ -274,6 +274,13 @@ public class XListUtils {
         return result;
     }
 
+    /**
+     * 集合拼接
+     *
+     * @param lists 待拼接集合
+     * @param <T>   集合元素类型
+     * @return 拼接好的结果
+     */
     @SafeVarargs
     public static <T> List<T> concat(List<T>... lists) {
 

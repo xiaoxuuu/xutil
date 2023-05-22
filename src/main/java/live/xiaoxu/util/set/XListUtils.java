@@ -277,15 +277,15 @@ public class XListUtils {
     /**
      * 集合拼接
      *
-     * @param lists 待拼接集合
-     * @param <T>   集合元素类型
+     * @param collections 待拼接集合
+     * @param <T>         集合元素类型
      * @return 拼接好的结果
      */
     @SafeVarargs
-    public static <T> List<T> concat(List<T>... lists) {
+    public static <T> List<T> concat(Collection<T>... collections) {
 
         List<T> list = new ArrayList<>();
-        for (List<T> tList : lists) {
+        for (Collection<T> tList : collections) {
             if (isEmpty(tList)) {
                 continue;
             }

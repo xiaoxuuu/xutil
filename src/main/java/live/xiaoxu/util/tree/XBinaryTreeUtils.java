@@ -1,5 +1,9 @@
 package live.xiaoxu.util.tree;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * <p>二叉树工具类，需继承 {@link BinaryTreeNode BinaryTreeNode}</p>
  *
@@ -36,5 +40,35 @@ public class XBinaryTreeUtils {
             // 高度应该算更高的一边，（+1 是因为要算上自身这一层）
             return l > r ? (l + 1) : (r + 1);
         }
+    }
+
+    public static <T> BinaryTreeNode<T> toTree(List<T> list) {
+
+        int index = 0;
+        LinkedList<BinaryTreeNode<T>> linkedList = new LinkedList<>();
+        linkedList.add(new BinaryTreeNode<>());
+        while (index < list.size()) {
+
+            BinaryTreeNode<T> node = linkedList.poll();
+            if (node == null) {
+                break;
+            }
+            node.setData(list.get(index));
+            if ((index + 1) * 2 - 1 < list.size()) {
+                node.setRight(new BinaryTreeNode<>());
+                linkedList.add(node.getLeft());
+            }
+            if ((index + 1) * 2 < list.size()) {
+                node.setRight(new BinaryTreeNode<>());
+                linkedList.add(node.getRight());
+            }
+            index++;
+        }
+        return new BinaryTreeNode<T>();
+    }
+
+    public static <T> List<T> toList(BinaryTreeNode<T> list) {
+
+        return new ArrayList<>();
     }
 }

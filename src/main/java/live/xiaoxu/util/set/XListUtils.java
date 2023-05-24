@@ -350,4 +350,17 @@ public class XListUtils {
         }
         return result;
     }
+
+    public static <T> List<T> removeTail(List<T> list, T t) {
+
+        int i = list.size() - 1;
+        while (i >= 0 && Objects.isNull(t) ? Objects.isNull(list.get(i)) : (Objects.equals(t, list.get(i)))) {
+            i--;
+        }
+        List<T> newList = new ArrayList<>(i + 1);
+        for (int j = 0; j <= i; j++) {
+            newList.add(list.get(j));
+        }
+        return newList;
+    }
 }

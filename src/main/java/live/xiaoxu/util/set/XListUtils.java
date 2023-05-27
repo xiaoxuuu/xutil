@@ -229,6 +229,15 @@ public class XListUtils {
         return page(list, (int) current, (int) size);
     }
 
+    /**
+     * 手动分页
+     *
+     * @param list    待分页集合
+     * @param current 当前页数
+     * @param size    每页大小
+     * @param <T>     类型
+     * @return 分页结果
+     */
     public static <T> List<T> page(List<T> list, int current, int size) {
 
         if (current < 0 || size < 0) {

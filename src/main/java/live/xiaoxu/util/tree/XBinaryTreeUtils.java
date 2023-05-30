@@ -42,6 +42,26 @@ public class XBinaryTreeUtils {
         }
     }
 
+    /**
+     * <p>求二叉树的节点数：</p>
+     * <p>求节点数时，我们看看获取某个节点为子树的节点数的实现。</p>
+     * <p>首先节点为空，则个数肯定为 0；</p>
+     * <p>如果不为空，那就算上这个节点之后继续递归所有左右子树的子节点数，</p>
+     * <p>全部相加就是以所给节点为根的子树的节点数</p>
+     * <p>如果求二叉树的节点数，则输入根节点即可</p>
+     */
+    public static <T> int size(BinaryTreeNode<T> node) {
+
+        if (node == null) {
+            // 如果节点为空，则返回节点数为 0
+            return 0;
+        } else {
+            // 计算本节点 所以要 +1
+            // 递归获取左子树节点数和右子树节点数，最终相加
+            return 1 + size(node.getLeft()) + size(node.getRight());
+        }
+    }
+
     public static <T> BinaryTreeNode<T> toTree(List<T> list) {
 
         int index = 0;
@@ -64,7 +84,7 @@ public class XBinaryTreeUtils {
             }
             index++;
         }
-        return new BinaryTreeNode<T>();
+        return new BinaryTreeNode<>();
     }
 
     public static <T> List<T> toList(BinaryTreeNode<T> list) {

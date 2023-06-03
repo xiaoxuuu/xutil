@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
  */
 public class XListUtils {
 
+    /**
+     * 禁止实例化
+     */
     private XListUtils() {
         throw new IllegalAccessError("XListUtils.class");
     }

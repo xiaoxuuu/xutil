@@ -10,6 +10,9 @@ import java.util.Objects;
  */
 public class XArrayUtils {
 
+    /**
+     * 禁止实例化
+     */
     private XArrayUtils() {
         throw new IllegalAccessError("XArrayUtils.class");
     }

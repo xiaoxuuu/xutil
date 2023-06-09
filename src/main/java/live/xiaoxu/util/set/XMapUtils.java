@@ -12,6 +12,9 @@ import java.util.*;
  */
 public class XMapUtils {
 
+    /**
+     * 禁止实例化
+     */
     private XMapUtils() {
         throw new IllegalAccessError("XMapUtils.class");
     }

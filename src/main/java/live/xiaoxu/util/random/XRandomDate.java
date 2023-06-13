@@ -19,16 +19,16 @@ public class XRandomDate {
      */
     private LocalDateTime left;
 
-
     /**
      * 最大时间
      */
     private LocalDateTime right;
 
     /**
-     * 禁止直接无参实例化
+     * 禁止实例化
      */
     private XRandomDate() {
+        throw new IllegalAccessError("XRandomDate.class");
     }
 
     /**

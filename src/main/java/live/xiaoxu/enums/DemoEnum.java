@@ -11,18 +11,23 @@ public enum DemoEnum implements EnumInterface<Long>, EnumDescInterface {
     /**
      * 示例枚举
      */
-    ONE(1L, "一", "数字 1"),
-    TWO(2L, "二", "数字 2"),
+    ONE(1L, "数字 1"),
+    TWO(2L, "数字 2"),
     ;
 
+    /**
+     * 编码
+     */
     private final Long code;
-    private final String introduction;
-    private final String desc;
 
-    DemoEnum(Long code, String introduction, String desc) {
+    /**
+     * 介绍
+     */
+    private final String introduction;
+
+    DemoEnum(Long code, String introduction) {
         this.code = code;
         this.introduction = introduction;
-        this.desc = desc;
     }
 
     @Override
@@ -33,10 +38,6 @@ public enum DemoEnum implements EnumInterface<Long>, EnumDescInterface {
     @Override
     public String getIntroduction() {
         return introduction;
-    }
-
-    public String getDesc() {
-        return desc;
     }
 
     @Override

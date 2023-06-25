@@ -18,6 +18,9 @@ import java.util.List;
  */
 public class XDateUtils {
 
+    /**
+     * 获取系统默认时区
+     */
     private static final ZoneId ZONE_ID = ZoneId.systemDefault();
 
     /**
@@ -67,12 +70,12 @@ public class XDateUtils {
     /**
      * {@link java.lang.String String} 转 {@link java.time.LocalDateTime LocalDateTime}
      *
-     * @param date 日期，默认格式：{@link live.xiaoxu.constants.DateConstants#DEFAULT_DATE_FORMAT DateConstants.DEFAULT_DATE_FORMAT}
+     * @param date 日期，默认格式：{@link live.xiaoxu.constants.DateConstants#DEFAULT_DATE_TIME_FORMAT DateConstants.DEFAULT_DATE_FORMAT}
      * @return 转换结果
      */
     public static LocalDateTime stringToLocalDateTime(String date) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateConstants.DEFAULT_DATE_FORMAT);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateConstants.DEFAULT_DATE_TIME_FORMAT);
         return LocalDateTime.parse(date, formatter);
     }
 
@@ -91,12 +94,12 @@ public class XDateUtils {
     /**
      * {@link java.time.LocalDateTime LocalDateTime} 转 {@link java.lang.String String}
      *
-     * @param localDateTime 日期，默认格式：{@link live.xiaoxu.constants.DateConstants#DEFAULT_DATE_FORMAT DateConstants.DEFAULT_DATE_FORMAT}
+     * @param localDateTime 日期，默认格式：{@link live.xiaoxu.constants.DateConstants#DEFAULT_DATE_TIME_FORMAT DateConstants.DEFAULT_DATE_FORMAT}
      * @return 转换结果
      */
     public static String localDateTimeToString(LocalDateTime localDateTime) {
 
-        return localDateTime.format(DateTimeFormatter.ofPattern(DateConstants.DEFAULT_DATE_FORMAT));
+        return localDateTime.format(DateTimeFormatter.ofPattern(DateConstants.DEFAULT_DATE_TIME_FORMAT));
     }
 
     /**
@@ -143,7 +146,7 @@ public class XDateUtils {
      * @return 当前时间
      */
     public static String getNowTime() {
-        return localDateTimeToString(LocalDateTime.now(), DateConstants.DEFAULT_DATE_FORMAT);
+        return localDateTimeToString(LocalDateTime.now(), DateConstants.DEFAULT_DATE_TIME_FORMAT);
     }
 
     /**

@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
  */
 public class XListUtils {
 
+    /**
+     * 禁止实例化
+     */
     private XListUtils() {
         throw new IllegalAccessError("XListUtils.class");
     }
@@ -224,11 +227,29 @@ public class XListUtils {
         return returnList;
     }
 
+    /**
+     * 手动分页
+     *
+     * @param list    待分页集合
+     * @param current 当前页数
+     * @param size    每页大小
+     * @param <T>     类型
+     * @return 分页结果
+     */
     public static <T> List<T> page(List<T> list, long current, long size) {
 
         return page(list, (int) current, (int) size);
     }
 
+    /**
+     * 手动分页
+     *
+     * @param list    待分页集合
+     * @param current 当前页数
+     * @param size    每页大小
+     * @param <T>     类型
+     * @return 分页结果
+     */
     public static <T> List<T> page(List<T> list, int current, int size) {
 
         if (current < 0 || size < 0) {
@@ -274,11 +295,18 @@ public class XListUtils {
         return result;
     }
 
+    /**
+     * 集合拼接
+     *
+     * @param collections 待拼接集合
+     * @param <T>         集合元素类型
+     * @return 拼接好的结果
+     */
     @SafeVarargs
-    public static <T> List<T> concat(List<T>... lists) {
+    public static <T> List<T> concat(Collection<T>... collections) {
 
         List<T> list = new ArrayList<>();
-        for (List<T> tList : lists) {
+        for (Collection<T> tList : collections) {
             if (isEmpty(tList)) {
                 continue;
             }

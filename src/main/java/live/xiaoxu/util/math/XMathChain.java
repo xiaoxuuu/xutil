@@ -17,7 +17,7 @@ public class XMathChain {
     private BigDecimal value;
 
     /**
-     * 禁止空参构造
+     * 禁止实例化
      */
     private XMathChain() {
         throw new IllegalAccessError("XMathChain.class");

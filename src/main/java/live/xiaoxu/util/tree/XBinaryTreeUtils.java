@@ -26,6 +26,10 @@ public class XBinaryTreeUtils {
      * <p>如果一个节点为空，那么这个节点肯定是一颗空树，高度为 0；</p>
      * <p>如果不为空，那么我们要遍历地比较它的左子树高度和右子树高度，高的一个为这个子树的最大高度，然后加上自己本身的高度就是了</p>
      * <p>获取二叉树的高度，只需要调用第一种方法，即传入根节点</p>
+     *
+     * @param node 节点
+     * @param <T>  数据类型
+     * @return 高度
      */
     public static <T> int height(BinaryTreeNode<T> node) {
 
@@ -49,6 +53,10 @@ public class XBinaryTreeUtils {
      * <p>如果不为空，那就算上这个节点之后继续递归所有左右子树的子节点数，</p>
      * <p>全部相加就是以所给节点为根的子树的节点数</p>
      * <p>如果求二叉树的节点数，则输入根节点即可</p>
+     *
+     * @param node 节点
+     * @param <T>  节点类型
+     * @return 节点总数
      */
     public static <T> int size(BinaryTreeNode<T> node) {
 
@@ -62,6 +70,13 @@ public class XBinaryTreeUtils {
         }
     }
 
+    /**
+     * 集合转树，逐层排列，null 视为空节点，且此空节点对应子节点位置会被跳过
+     *
+     * @param list 集合
+     * @param <T>  集合元素类型
+     * @return 树
+     */
     public static <T> BinaryTreeNode<T> toTree(List<T> list) {
 
         int index = 0;
@@ -87,7 +102,15 @@ public class XBinaryTreeUtils {
         return new BinaryTreeNode<>();
     }
 
-    public static <T> List<T> toList(BinaryTreeNode<T> list) {
+    /**
+     * TODO 树转集合
+     *
+     * @param tree 树
+     * @param <T>  树元素类型
+     * @return 集合
+     */
+    @Deprecated
+    public static <T> List<T> toList(BinaryTreeNode<T> tree) {
 
         return new ArrayList<>();
     }

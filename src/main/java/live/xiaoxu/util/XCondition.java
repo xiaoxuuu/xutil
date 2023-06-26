@@ -74,4 +74,18 @@ public class XCondition<T> {
             consumer.accept(t);
         }
     }
+
+    /**
+     * 根据操作结果执行 consumer
+     *
+     * @param consumerTrue  操作结果为 true 执行
+     * @param consumerFalse 操作结果为 false 执行
+     */
+    public void handle(Consumer<T> consumerTrue, Consumer<T> consumerFalse) {
+        if (function.apply(t)) {
+            consumerTrue.accept(t);
+        } else {
+            consumerFalse.accept(t);
+        }
+    }
 }

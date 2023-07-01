@@ -14,7 +14,7 @@ public class XCatch<T> {
     /**
      * 消费者
      */
-    private final Supplier<T> supplier;
+    private final Supplier<T> trySupplier;
 
     /**
      * 禁止空参实例化
@@ -23,35 +23,35 @@ public class XCatch<T> {
         throw new IllegalAccessError(this.getClass().getName());
     }
 
-    private XCatch(Supplier<T> supplier) {
-        this.supplier = supplier;
+    private XCatch(Supplier<T> trySupplier) {
+        this.trySupplier = trySupplier;
     }
 
     /**
      * 构造，传递待捕获代码段
      *
-     * @param supplier 待捕获代码段
-     * @param <T>      代码执行结果类型
+     * @param trySupplier 待捕获代码段
+     * @param <T>         代码执行结果类型
      * @return 代码执行结果
      */
-    public static <T> XCatch<T> of(Supplier<T> supplier) {
+    public static <T> XCatch<T> of(Supplier<T> trySupplier) {
 
-        Objects.requireNonNull(supplier);
-        return new XCatch<>(supplier);
+        Objects.requireNonNull(trySupplier);
+        return new XCatch<>(trySupplier);
     }
 
     /**
-     * 执行代码，如果出现异常，执行 supplierException
+     * 执行代码，如果出现异常，执行 catchSupplier
      *
-     * @param supplierException 出现异常后的处理代码
+     * @param catchSupplier 出现异常后的处理代码
      * @return 结果
      */
-    public T handle(Supplier<T> supplierException) {
+    public T handle(Supplier<T> catchSupplier) {
         try {
-            return supplier.get();
+            return trySupplier.get();
         } catch (Exception e) {
             e.printStackTrace();
-            return supplierException.get();
+            return catchSupplier.get();
         }
     }
 }

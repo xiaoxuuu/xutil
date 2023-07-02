@@ -16,6 +16,9 @@ public class XCatch<T> {
      */
     private final Supplier<T> trySupplier;
 
+
+    private Runnable finalRunnable;
+
     /**
      * 禁止空参实例化
      */
@@ -41,6 +44,18 @@ public class XCatch<T> {
     }
 
     /**
+     * finally 执行语句
+     *
+     * @param finalRunnable 最终执行
+     * @return this
+     */
+    public XCatch<T> last(Runnable finalRunnable) {
+
+        this.finalRunnable = finalRunnable;
+        return this;
+    }
+
+    /**
      * 执行代码，如果出现异常，执行 catchSupplier
      *
      * @param catchSupplier 出现异常后的处理代码
@@ -52,6 +67,10 @@ public class XCatch<T> {
         } catch (Exception e) {
             e.printStackTrace();
             return catchSupplier.get();
+        } finally {
+            if (null != finalRunnable) {
+                finalRunnable.run();
+            }
         }
     }
 }

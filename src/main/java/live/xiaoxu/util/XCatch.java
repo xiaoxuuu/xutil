@@ -16,7 +16,9 @@ public class XCatch<T> {
      */
     private final Supplier<T> trySupplier;
 
-
+    /**
+     * 最终执行
+     */
     private Runnable finalRunnable;
 
     /**

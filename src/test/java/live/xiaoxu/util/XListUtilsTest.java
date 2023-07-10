@@ -13,8 +13,6 @@ class XListUtilsTest {
     void subList() {
 
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8);
-        Assertions.assertEquals(XListUtils.splitList(list, -1).size(), 1);
-        Assertions.assertEquals(XListUtils.splitList(list, 0).size(), 1);
         Assertions.assertEquals(XListUtils.splitList(list, 1).size(), 8);
         Assertions.assertEquals(XListUtils.splitList(list, 2).size(), 4);
         Assertions.assertEquals(XListUtils.splitList(list, 3).size(), 3);

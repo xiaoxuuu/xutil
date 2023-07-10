@@ -25,10 +25,9 @@ public class XRandomDate {
     private LocalDateTime right;
 
     /**
-     * 禁止实例化
+     * 禁止直接实例化
      */
     private XRandomDate() {
-        throw new IllegalAccessError("XRandomDate.class");
     }
 
     /**

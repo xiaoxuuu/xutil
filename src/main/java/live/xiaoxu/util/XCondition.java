@@ -37,7 +37,7 @@ public class XCondition<T> {
      * 禁止实例化
      */
     private XCondition() {
-        throw new IllegalAccessError("XBeanUtils.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

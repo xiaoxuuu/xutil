@@ -21,7 +21,7 @@ public final class XEnumUtils {
      * 禁止实例化
      */
     private XEnumUtils() {
-        throw new IllegalAccessError("XEnumUtils.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

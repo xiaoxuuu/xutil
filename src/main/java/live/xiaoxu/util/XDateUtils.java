@@ -27,7 +27,7 @@ public class XDateUtils {
      * 禁止实例化
      */
     private XDateUtils() {
-        throw new IllegalAccessError("XDateUtils.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

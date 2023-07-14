@@ -14,7 +14,7 @@ public class XMD5Util {
      * 禁止实例化
      */
     private XMD5Util() {
-        throw new IllegalAccessError("XMD5Util.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

@@ -14,6 +14,13 @@ import java.util.Base64;
 public class XImageUtils {
 
     /**
+     * 禁止实例化
+     */
+    private XImageUtils() {
+        throw new IllegalAccessError(this.getClass().getName());
+    }
+
+    /**
      * 将图片流编码为 Base64
      *
      * @param imageUrl 图片 URL

@@ -14,7 +14,7 @@ public class XIdCardUtil {
      * 禁止实例化
      */
     private XIdCardUtil() {
-        throw new IllegalAccessError("XIdCardUtil.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

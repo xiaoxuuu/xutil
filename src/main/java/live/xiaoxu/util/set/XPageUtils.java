@@ -12,6 +12,13 @@ import java.util.List;
 public class XPageUtils {
 
     /**
+     * 禁止实例化
+     */
+    private XPageUtils() {
+        throw new IllegalAccessError(this.getClass().getName());
+    }
+
+    /**
      * 手动分页
      *
      * @param list    待分页集合

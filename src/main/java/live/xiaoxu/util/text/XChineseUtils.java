@@ -14,7 +14,7 @@ public final class XChineseUtils {
      * 禁止实例化
      */
     private XChineseUtils() {
-        throw new IllegalAccessError("XChineseUtils.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     private final static int[] LI_SEC_POS_VALUE = {1601, 1637, 1833, 2078, 2274,

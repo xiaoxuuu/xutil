@@ -17,7 +17,7 @@ public class XStreamUtils {
      * 禁止实例化
      */
     private XStreamUtils() {
-        throw new IllegalAccessError("XStreamUtils.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

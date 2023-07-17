@@ -18,7 +18,7 @@ public class XListUtils {
      * 禁止实例化
      */
     private XListUtils() {
-        throw new IllegalAccessError("XListUtils.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     /**

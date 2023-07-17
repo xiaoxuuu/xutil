@@ -20,7 +20,7 @@ public class XMathChain {
      * 禁止实例化
      */
     private XMathChain() {
-        throw new IllegalAccessError("XMathChain.class");
+        throw new IllegalAccessError(this.getClass().getName());
     }
 
     public XMathChain(Object val) {

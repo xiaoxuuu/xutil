@@ -52,7 +52,7 @@ public class XCondition<T> {
 
         Objects.requireNonNull(t);
         Objects.requireNonNull(function);
-        return new XCondition<T>(t, function);
+        return new XCondition<>(t, function);
     }
 
     /**

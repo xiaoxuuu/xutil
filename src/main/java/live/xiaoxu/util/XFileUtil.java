@@ -17,6 +17,13 @@ public class XFileUtil {
         throw new IllegalAccessError(this.getClass().getName());
     }
 
+    /**
+     * 流转文件
+     *
+     * @param ins  流
+     * @param file 文件
+     * @throws IOException
+     */
     public static void inputStreamToFile(InputStream ins, File file) throws IOException {
 
         OutputStream os = new FileOutputStream(file);

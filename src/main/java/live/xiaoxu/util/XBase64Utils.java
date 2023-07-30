@@ -1,6 +1,9 @@
 package live.xiaoxu.util;
 
+import live.xiaoxu.util.text.XStringUtils;
+
 import java.util.Base64;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -31,5 +34,24 @@ public class XBase64Utils {
         String[] parts = base64Image.split(",");
         String imageString = parts[1];
         return Base64.getDecoder().decode(imageString);
+    }
+
+    /**
+     * 获取 base64 文件类型
+     *
+     * @param base64        文件
+     * @param defaultSuffix 默认后缀
+     * @return 文件类型
+     */
+    public static String getFileSuffix(String base64, String defaultSuffix) {
+
+        if (XStringUtils.isBlank(base64)) {
+            return defaultSuffix;
+        }
+        Matcher fileSuffixMatcher = FILE_SUFFIX_PATTERN.matcher(base64);
+        if (!fileSuffixMatcher.find()) {
+            return defaultSuffix;
+        }
+        return fileSuffixMatcher.group("fileSuffix");
     }
 }

@@ -54,4 +54,23 @@ public class XBase64Utils {
         }
         return fileSuffixMatcher.group("fileSuffix");
     }
+
+    public static String fixBase64Image(String base64Image) {
+
+        return fixBase64("data:image/jpeg;base64,", base64Image);
+    }
+
+    public static String fixBase64(String prefix, String type) {
+
+        if (XStringUtils.isBlank(prefix)) {
+            throw new RuntimeException("base64 前缀数据为空");
+        }
+        if (XStringUtils.isBlank(type)) {
+            throw new RuntimeException("base64 数据为空");
+        }
+        if (!type.startsWith("data:")) {
+            type = prefix + type;
+        }
+        return type;
+    }
 }

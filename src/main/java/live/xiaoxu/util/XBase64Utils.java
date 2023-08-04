@@ -55,22 +55,35 @@ public class XBase64Utils {
         return fileSuffixMatcher.group("fileSuffix");
     }
 
-    public static String fixBase64Image(String base64Image) {
+    /**
+     * 补全 base64 中的后缀
+     *
+     * @param base64 文件
+     * @return 补全后的数据
+     */
+    public static String fixBase64Image(String base64) {
 
-        return fixBase64("data:image/jpeg;base64,", base64Image);
+        return fixBase64("data:image/jpeg;base64,", base64);
     }
 
-    public static String fixBase64(String prefix, String type) {
+    /**
+     * 补全 base64 中的后缀
+     *
+     * @param prefix 前缀
+     * @param file   文件
+     * @return 补全后的数据
+     */
+    public static String fixBase64(String prefix, String file) {
 
         if (XStringUtils.isBlank(prefix)) {
             throw new RuntimeException("base64 前缀数据为空");
         }
-        if (XStringUtils.isBlank(type)) {
+        if (XStringUtils.isBlank(file)) {
             throw new RuntimeException("base64 数据为空");
         }
-        if (!type.startsWith("data:")) {
-            type = prefix + type;
+        if (!file.startsWith("data:")) {
+            file = prefix + file;
         }
-        return type;
+        return file;
     }
 }

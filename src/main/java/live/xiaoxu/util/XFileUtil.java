@@ -1,6 +1,7 @@
 package live.xiaoxu.util;
 
 import java.io.*;
+import java.util.UUID;
 
 /**
  * <p>文件工具类</p>
@@ -34,5 +35,15 @@ public class XFileUtil {
         }
         os.close();
         ins.close();
+    }
+
+    public static File base64ToFile(String base64Image) throws IOException {
+
+        base64Image = XBase64Utils.fixBase64Image(base64Image);
+        File tempFile = File.createTempFile(String.valueOf(UUID.randomUUID()), XBase64Utils.getFileSuffix(base64Image, "jpeg"));
+        byte[] bytes = XBase64Utils.decodeBase64Image(base64Image);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+        inputStreamToFile(inputStream, tempFile);
+        return tempFile;
     }
 }

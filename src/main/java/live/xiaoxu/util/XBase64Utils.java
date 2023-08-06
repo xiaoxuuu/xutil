@@ -86,4 +86,15 @@ public class XBase64Utils {
         }
         return file;
     }
+
+    /**
+     * base64 数组转字符串
+     *
+     * @param bytes 数组
+     * @return 字符串
+     */
+    public static String byteToBase64(byte[] bytes) {
+
+        return Base64.getEncoder().encodeToString(bytes);
+    }
 }

@@ -26,14 +26,19 @@ public class XBase64Utils {
     /**
      * String 类型转 byte 数组
      *
-     * @param base64Image 字符串
+     * @param base64 字符串
      * @return byte 数组
      */
-    public static byte[] decodeBase64Image(String base64Image) {
+    public static byte[] decodeBase64(String base64) {
 
-        String[] parts = base64Image.split(",");
-        String imageString = parts[1];
-        return Base64.getDecoder().decode(imageString);
+        String[] parts = base64.split(",");
+        String base64String = parts[1];
+        return Base64.getDecoder().decode(base64String);
+    }
+
+    public static String getFileSuffix(String base64) {
+
+        return getFileSuffix(base64, "");
     }
 
     /**

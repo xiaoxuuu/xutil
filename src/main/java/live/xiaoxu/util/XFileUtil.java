@@ -47,7 +47,7 @@ public class XFileUtil {
     public static File base64ToFile(String base64) throws IOException {
 
         File tempFile = File.createTempFile(String.valueOf(UUID.randomUUID()), XBase64Utils.getFileSuffix(base64));
-        byte[] bytes = XBase64Utils.decodeBase64Image(base64);
+        byte[] bytes = XBase64Utils.decodeBase64(base64);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         inputStreamToFile(inputStream, tempFile);
         return tempFile;

@@ -23,7 +23,7 @@ public class XFileUtil {
      *
      * @param ins  流
      * @param file 文件
-     * @throws IOException
+     * @throws IOException 异常
      */
     public static void inputStreamToFile(InputStream ins, File file) throws IOException {
 
@@ -37,11 +37,17 @@ public class XFileUtil {
         ins.close();
     }
 
-    public static File base64ToFile(String base64Image) throws IOException {
+    /**
+     * base64 转文件
+     *
+     * @param base64 字符串
+     * @return 文件
+     * @throws IOException 异常
+     */
+    public static File base64ToFile(String base64) throws IOException {
 
-        base64Image = XBase64Utils.fixBase64Image(base64Image);
-        File tempFile = File.createTempFile(String.valueOf(UUID.randomUUID()), XBase64Utils.getFileSuffix(base64Image, "jpeg"));
-        byte[] bytes = XBase64Utils.decodeBase64Image(base64Image);
+        File tempFile = File.createTempFile(String.valueOf(UUID.randomUUID()), XBase64Utils.getFileSuffix(base64));
+        byte[] bytes = XBase64Utils.decodeBase64Image(base64);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
         inputStreamToFile(inputStream, tempFile);
         return tempFile;

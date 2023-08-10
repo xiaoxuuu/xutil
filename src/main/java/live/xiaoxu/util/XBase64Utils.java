@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
  */
 public class XBase64Utils {
 
+    /**
+     * 获取文件后缀正则表达式
+     */
     private static final Pattern FILE_SUFFIX_PATTERN = Pattern.compile("(?<=/)(?<fileSuffix>\\w.*?)(?=;)");
 
     /**

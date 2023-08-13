@@ -39,6 +39,12 @@ public class XBase64Utils {
         return Base64.getDecoder().decode(base64String);
     }
 
+    /**
+     * 获取文件后缀，默认返回空
+     *
+     * @param base64 文件
+     * @return 获取的后缀
+     */
     public static String getFileSuffix(String base64) {
 
         return getFileSuffix(base64, "");

@@ -307,7 +307,7 @@ public class XListUtils {
     public static <T> List<T> intersection(List<T> left, List<T> right) {
 
         List<T> list = new ArrayList<>();
-        if (left == null || right == null || left.size() == 0 || right.size() == 0) {
+        if (left == null || right == null || left.isEmpty() || right.isEmpty()) {
             return list;
         }
         HashSet<T> set = new HashSet<>(left);

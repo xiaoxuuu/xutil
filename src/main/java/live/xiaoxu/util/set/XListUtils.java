@@ -320,12 +320,12 @@ public class XListUtils {
     }
 
     /**
-     * <p>将一个集合按照某种规则重新排序 TODO 如果 ruleList 数据不完整可能导致数据丢失</p>
+     * <p>将一个集合按照指定规则重新排序</p>
      * <p>例如：User(int id)</p>
-     * <p>{@code List<User> userList = Arrays.asList(new User(2), new User(3), new User(1));}</p>
+     * <p>{@code List<User> userList = Arrays.asList(new User(7), new User(3), new User(1), new User(2));}</p>
      * <p>{@code List<Integer> idList = Arrays.asList(3, 2, 1);}</p>
      * <p>{@code List<User> sortedList = resort(userList, idList, User::getId);}</p>
-     * <p>{@code sortedList：User[3], User[2], User[1]}</p>
+     * <p>{@code sortedList：User[3], User[2], User[1], User[7]}</p>
      *
      * @param source       待排序集合
      * @param sortRuleList 排序柜子
@@ -337,9 +337,13 @@ public class XListUtils {
     public static <T, K> List<T> resort(List<T> source, List<K> sortRuleList, Function<? super T, ? extends K> keyMapper) {
 
         List<T> result = new ArrayList<>(source.size());
-        Map<? extends K, T> collect = source.stream().collect(Collectors.toMap(keyMapper, a -> a));
+        Map<? extends K, List<T>> collect = source.stream().collect(Collectors.groupingBy(keyMapper));
         for (K k : sortRuleList) {
-            result.add(collect.get(k));
+            result.addAll(collect.get(k));
+            collect.remove(k);
+        }
+        if (!collect.isEmpty()) {
+            collect.forEach((k, v) -> result.addAll(v));
         }
         return result;
     }

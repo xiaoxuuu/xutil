@@ -32,7 +32,7 @@ public final class XChineseUtils {
      */
     public static String getAllFirstLetter(String str) {
 
-        if (str == null || str.trim().length() == 0) {
+        if (str == null || str.trim().isEmpty()) {
             return "";
         }
 
@@ -52,7 +52,7 @@ public final class XChineseUtils {
      */
     public static String getFirstLetter(String chinese) {
 
-        if (chinese == null || chinese.trim().length() == 0) {
+        if (chinese == null || chinese.trim().isEmpty()) {
             return "";
         }
         chinese = conversionStr(chinese, "GB2312", "ISO8859-1");
@@ -76,12 +76,18 @@ public final class XChineseUtils {
                     }
                 }
             } else {
-                // 非汉字字符,如图形符号或ASCII码
+                // 非汉字字符，如图形符号或 ASCII 码
                 chinese = conversionStr(chinese, "ISO8859-1", "GB2312");
                 chinese = chinese.substring(0, 1);
             }
         }
         return chinese;
+    }
+
+    public static void main(String[] args) {
+
+        String a = getAllFirstLetter("你好AsNihao");
+        System.out.println(a);
     }
 
     /**
@@ -141,7 +147,7 @@ public final class XChineseUtils {
         for (int i = 0; i < length; i++) {
             char ch = letter.charAt(length - i - 1);
             num = ch - 'A' + 1;
-            num *= Math.pow(26, i);
+            num *= (int) Math.pow(26, i);
             number += num;
         }
         return number;

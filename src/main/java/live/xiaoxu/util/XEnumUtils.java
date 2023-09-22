@@ -2,6 +2,7 @@ package live.xiaoxu.util;
 
 import live.xiaoxu.enums.EnumDescInterface;
 import live.xiaoxu.enums.EnumInterface;
+import live.xiaoxu.util.bean.XBeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

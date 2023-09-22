@@ -1,4 +1,4 @@
-package live.xiaoxu.util;
+package live.xiaoxu.util.bean;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

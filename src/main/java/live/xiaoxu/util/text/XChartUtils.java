@@ -43,4 +43,37 @@ public class XChartUtils {
         }
         return sb.toString();
     }
+
+    /**
+     * 下划线转驼峰
+     *
+     * @param param 入参
+     * @return String
+     */
+    public static String underlineToCamel(String param) {
+        if (XStringUtils.isBlank(param)) {
+            return "";
+        }
+        int len = param.length();
+        StringBuilder sb = new StringBuilder(len);
+        // "_" 后转大写标志,默认字符前面没有"_"
+        boolean flag = false;
+        for (int i = 0; i < len; i++) {
+            char c = param.charAt(i);
+            if (c == UNDERLINE) {
+                flag = true;
+                // 标志设置为true,跳过
+            } else {
+                if (flag) {
+                    // 表示当前字符前面是"_" ,当前字符转大写
+                    sb.append(Character.toUpperCase(param.charAt(i)));
+                    // 重置标识
+                    flag = false;
+                } else {
+                    sb.append(Character.toLowerCase(param.charAt(i)));
+                }
+            }
+        }
+        return sb.toString();
+    }
 }

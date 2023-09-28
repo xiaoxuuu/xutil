@@ -25,6 +25,7 @@ public class XFieldUtils {
      *
      * @param fn  lambda 表达式，bean 的属性的 get 方法
      * @param <T> 泛型
+     * @param <R> 泛型
      * @return 属性对象
      */
     public static <T, R> Field getField(XFunction<T, R> fn) {
@@ -41,10 +42,13 @@ public class XFieldUtils {
         return field;
     }
 
-    /***
+    /**
      * 转换方法引用为属性名
+     *
+     * @param serializedLambda 序列化 Lambda
+     * @return 方法名
      */
-    public static <T, R> String getFieldName(SerializedLambda serializedLambda) {
+    public static String getFieldName(SerializedLambda serializedLambda) {
 
         // 从 lambda 信息取出 method、field、class 等
         String implMethodName = serializedLambda.getImplMethodName();

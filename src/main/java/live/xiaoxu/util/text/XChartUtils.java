@@ -7,6 +7,7 @@ package live.xiaoxu.util.text;
  * @since 2023/9/25 17:58
  */
 public class XChartUtils {
+
     public static final char UNDERLINE = '_';
 
     private XChartUtils() {
